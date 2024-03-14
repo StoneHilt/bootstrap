@@ -1,0 +1,54 @@
+<?php
+
+namespace StoneHilt\Bootstrap\Tests;
+
+use Faker\Factory;
+use Faker\Generator as FakerGenerator;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\TestCase as IlluminateTestCase;
+
+/**
+ * Class TestCase
+ *
+ * @package StoneHilt\Bootstrap\Tests
+ */
+abstract class TestCase extends IlluminateTestCase
+{
+    /**
+     * @var FakerGenerator|null $faker
+     */
+    private static ?FakerGenerator $faker = null;
+
+    /**
+     * @inheritDoc
+     */
+    public function createApplication()
+    {
+        $app = require __DIR__ . '/Laravel/bootstrap.php';
+
+        $app->make(Kernel::class)->bootstrap();
+
+        return $app;
+    }
+
+    /**
+     * @return FakerGenerator
+     */
+    protected static function faker(): FakerGenerator
+    {
+        if (!isset(self::$faker)) {
+            self::$faker = static::makeFaker();
+        }
+
+        return self::$faker;
+    }
+
+    /**
+     * @param $locale
+     * @return FakerGenerator
+     */
+    protected static function makeFaker($locale = null): FakerGenerator
+    {
+        return Factory::create($locale ?? Factory::DEFAULT_LOCALE);
+    }
+}
