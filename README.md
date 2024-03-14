@@ -98,6 +98,105 @@ https://getbootstrap.com/docs/5.3/components/accordion/
 </x-bootstrap::component.accordion>
 ```
 
+### Badge
+https://getbootstrap.com/docs/5.3/components/badge/
+```html
+<div class="btn btn-primary position-relative">
+    Example heading
+    <x-bootstrap::component.badge type="danger">Danger</x-bootstrap::component.badge>
+</div>
+<div class="btn btn-primary position-relative">
+    Example heading
+    <x-bootstrap::component.badge type="secondary">Secondary</x-bootstrap::component.badge>
+</div>
+<div class="btn btn-primary position-relative">
+    Example heading
+    <x-bootstrap::component.badge type="danger" position="bottom-start">Bottom Start</x-bootstrap::component.badge>
+</div>
+<div class="btn btn-primary position-relative">
+    Example heading
+    <x-bootstrap::component.badge type="danger" position="bottom-end">Bottom End</x-bootstrap::component.badge>
+</div>
+```
+
+### Breadcrumb
+https://getbootstrap.com/docs/5.3/components/breadcrumb/
+```html
+<x-bootstrap::component.breadcrumb :items="['/' => 'Home', 'engineering.dashboard' => 'Engineering']" current="Bootstrap - Breadcrumb" divider="|"/>
+```
+
+### Dropdowns
+https://getbootstrap.com/docs/5.3/components/dropdowns/
+```html
+<x-bootstrap::component.dropdown label="Demo Dropdown 1">
+    <x-bootstrap::component.dropdown.item>Item 1</x-bootstrap::component.dropdown.item>
+    <x-bootstrap::component.dropdown.item>Item 2</x-bootstrap::component.dropdown.item>
+    <x-bootstrap::component.dropdown.divider />
+    <x-bootstrap::component.dropdown.item href="#">Item 3</x-bootstrap::component.dropdown.item>
+</x-bootstrap::component.dropdown>
+```
+Usage of slots for the items
+```html
+<x-bootstrap::component.dropdown label="Demo Dropdown 2">
+    <x-slot:items><li><a class="dropdown-item" href="#">Item A</a></x-slot:items>
+    <x-slot:items><li><a class="dropdown-item" href="#">Item B</a></x-slot:items>
+</x-bootstrap::component.dropdown>
+```
+
+### Navs & Tabs
+https://getbootstrap.com/docs/5.3/components/navs-tabs/
+Simple "nav" based navigation
+```html
+<x-bootstrap::component.nav>
+    <x-bootstrap::component.nav.item>Item 1</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item active="true">Item 2</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item href="#" disabled="true">Item 3</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item href="#">Item 3</x-bootstrap::component.nav.item>
+</x-bootstrap::component.nav>
+```
+
+Tabs styled navigation
+```html
+<x-bootstrap::component.nav display="tabs">
+    <x-bootstrap::component.nav.item>Item 1</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item active="true">Item 2</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item href="#" disabled="true">Item 3</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item href="#">Item 3</x-bootstrap::component.nav.item>
+</x-bootstrap::component.nav>
+```
+
+Pills styled navigation
+```html
+<x-bootstrap::component.nav display="tabs">
+    <x-bootstrap::component.nav.item>Item 1</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item active="true">Item 2</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item href="#" disabled="true">Item 3</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item href="#">Item 3</x-bootstrap::component.nav.item>
+</x-bootstrap::component.nav>
+```
+
+Dropdown as an item
+```html
+<x-bootstrap::component.nav display="pills" type="ol">
+    <x-bootstrap::component.nav.item active="true">Dropdown Alpha</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.dropdown label="Dropdown">
+        <x-bootstrap::component.dropdown.item>Drop Item 1</x-bootstrap::component.dropdown.item>
+        <x-bootstrap::component.dropdown.item>Drop Item 2</x-bootstrap::component.dropdown.item>
+        <x-bootstrap::component.dropdown.divider />
+        <x-bootstrap::component.dropdown.item href="#">Drop Item 3</x-bootstrap::component.dropdown.item>
+    </x-bootstrap::component.nav.dropdown>
+    <x-bootstrap::component.nav.item href="#" disabled="true">Dropdown Delta</x-bootstrap::component.nav.item>
+    <x-bootstrap::component.nav.item href="#">Dropdown Gamma</x-bootstrap::component.nav.item>
+</x-bootstrap::component.nav>
+```
+
+### Progress
+https://getbootstrap.com/docs/5.3/components/progress/
+```html
+<x-bootstrap::component.progress value="25"/>
+```
+
+
 ## Form
 ### Form
 Using method and action.
@@ -112,7 +211,6 @@ Using named route
     Component Form Controls 2
 </x-bootstrap::form>
 ```
-
 
 
 ## General
