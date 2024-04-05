@@ -69,7 +69,7 @@ abstract class Base extends Component
             $viewData['attributes'] = $this->transformAttributes($viewData['attributes']);
 
             return new HtmlString(
-                $this->view($this->viewName, $viewData)->render()
+                $this->view($this->getView(), $viewData)->render()
             );
         };
     }
@@ -83,6 +83,14 @@ abstract class Base extends Component
     public function resolveView()
     {
         return $this->render();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getView(): string
+    {
+        return $this->viewName;
     }
 
     /**

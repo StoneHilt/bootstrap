@@ -38,21 +38,6 @@ abstract class AbstractFormComponent extends Base
     }
 
     /**
-     * @return void
-     */
-    abstract protected function determineViewByType(): void;
-
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
-    {
-        $this->determineViewByType();
-
-        return parent::render();
-    }
-
-    /**
      * Override to transform/add attributes at render time
      *
      * @param ComponentAttributeBag $attributes

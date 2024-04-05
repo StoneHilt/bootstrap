@@ -50,18 +50,11 @@ class Card extends Base
     }
 
     /**
-     * @param array $viewData
-     * @return array
+     * @return string
      */
-    protected function transformViewData(array $viewData): array
+    protected function getView(): string
     {
-        $viewData = parent::transformViewData($viewData);
-
-        if ($this->horizontal) {
-            $this->viewName .= '_horizontal';
-        }
-
-        return $viewData;
+        return $this->horizontal ? $this->viewName .= '_horizontal' : $this->viewName;
     }
 
     /**

@@ -43,13 +43,11 @@ class Select extends AbstractFormComponent
     }
 
     /**
-     * @return void
+     * @return string
      */
-    protected function determineViewByType(): void
+    protected function getView(): string
     {
-        if ($this->horizontal) {
-            $this->viewName .= '_horizontal';
-        }
+        return $this->horizontal ? $this->viewName .= '_horizontal' : $this->viewName;
     }
 
     /**
