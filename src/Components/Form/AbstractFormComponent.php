@@ -45,11 +45,11 @@ abstract class AbstractFormComponent extends Base
      */
     protected function transformAttributes(ComponentAttributeBag $attributes): ComponentAttributeBag
     {
-        if (!$this->attributes->has('id')) {
+        if (isset($this->label) && !$attributes->has('id')) {
             $attributes['id'] = uniqid($this->name ?? '');
         }
 
-        if (!$this->attributes->has('name')) {
+        if (!$attributes->has('name')) {
             $attributes['name'] = $this->name;
         }
 

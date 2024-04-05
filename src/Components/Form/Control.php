@@ -65,6 +65,8 @@ class Control extends AbstractFormComponent
 
         if ($this->type === 'textarea' && !$attributes->has('rows')) {
             $attributes['rows'] = 3;
+        } else {
+            $attributes['type'] = $this->type;
         }
 
         if ($this->disabled) {
