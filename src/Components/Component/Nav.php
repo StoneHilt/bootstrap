@@ -79,8 +79,6 @@ class Nav extends Base
     {
         $viewData = parent::transformViewData($viewData);
 
-        $this->viewName .= '.' . $this->type;
-
         if (empty($viewData['items']) && $viewData['slot']->isNotEmpty()) {
             $viewData['items'] = [
                 new HtmlString($viewData['slot'])
@@ -88,6 +86,14 @@ class Nav extends Base
         }
 
         return $viewData;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getView(): string
+    {
+        return $this->viewName .= '.' . $this->type;
     }
 
     /**

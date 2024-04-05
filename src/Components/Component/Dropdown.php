@@ -66,10 +66,6 @@ class Dropdown extends Base
     {
         $viewData = parent::transformViewData($viewData);
 
-        if ($this->split) {
-            $this->viewName = 'bootstrap::component.dropdown.split';
-        }
-
         if (empty($viewData['items']) && $viewData['slot']->isNotEmpty()) {
             $viewData['items'] = [
                 new HtmlString($viewData['slot'])
@@ -77,6 +73,14 @@ class Dropdown extends Base
         }
 
         return $viewData;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getView(): string
+    {
+        return $this->split ? 'bootstrap::component.dropdown.split' : $this->viewName;
     }
 
     /**

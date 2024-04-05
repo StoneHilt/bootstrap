@@ -35,18 +35,16 @@ class Control extends AbstractFormComponent
     }
 
     /**
-     * @return void
+     * @return string
      */
-    protected function determineViewByType(): void
+    protected function getView(): string
     {
-        $this->viewName = match($this->type) {
+        $viewName = match($this->type) {
             'textarea' => 'bootstrap::form.textarea',
             default    => $this->viewName
         };
 
-        if ($this->horizontal) {
-            $this->viewName .= '_horizontal';
-        }
+        return $this->horizontal ? $viewName . '_horizontal' : $viewName;
     }
 
     /**
@@ -67,6 +65,8 @@ class Control extends AbstractFormComponent
 
         if ($this->type === 'textarea' && !$attributes->has('rows')) {
             $attributes['rows'] = 3;
+        } else {
+            $attributes['type'] = $this->type;
         }
 
         if ($this->disabled) {
