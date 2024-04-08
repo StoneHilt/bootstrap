@@ -34,6 +34,99 @@ class ControlTest extends FeatureTestCase
     ];
 
     /**
+     * @dataProvider provider_view
+     * @param string $view
+     * @param array $data
+     * @param array $expects
+     * @return void
+     */
+    public function test_view(string $view, array $data, array $expects)
+    {
+        $this->viewOnlySees($this->view($view, $data), $expects, false);
+    }
+
+    /**
+     * @return array[]
+     */
+    public static function provider_view(): array
+    {
+        $label    = static::faker()->words(3, true);
+        $name     = static::faker()->slug(2);
+        $id       = static::faker()->slug(1);
+        $datalist = static::faker()->words();
+
+        $providerData = [
+            [
+                'view' => 'form.control.no_label',
+                'data' => [
+                    'name' => $name,
+                ],
+                'expects' => [
+                    '<div class="mb-3">',
+                    sprintf('<input class="form-control" type="text" name="%s" >', $name),
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'form.control.text',
+                'data' => [
+                    'label' => $label,
+                    'name'  => $name,
+                    'id'    => $id,
+                ],
+                'expects' => [
+                    '<div class="mb-3">',
+                    sprintf('<label for="%s" class="form-label">%s</label>', $id, $label),
+                    sprintf('<input class="form-control" id="%s" type="text" name="%s" >', $id, $name),
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'form.control.datalist',
+                'data' => [
+                    'label'    => $label,
+                    'name'     => $name,
+                    'id'       => $id,
+                    'datalist' => $datalist,
+                ],
+                'expects' => array_merge(
+                    [
+                        '<div class="mb-3">',
+                        sprintf('<label for="%s" class="form-label">%s</label>', $id, $label),
+                        sprintf('<input class="form-control" id="%s" type="text" name="%s"  list="%s-datalist" >', $id, $name, $id),
+                        sprintf('<datalist id="%s-datalist">', $id),
+                    ],
+                    array_map(
+                        fn($val) => sprintf('<option value="%s">', $val),
+                        $datalist
+                    ),
+                    [
+                        '</datalist>',
+                        '</div>',
+                    ],
+                ),
+            ],
+        ];
+
+        foreach (static::$baseTypes as $type) {
+            $providerData[] = [
+                'view' => 'form.control.type',
+                'data' => [
+                    'name' => $name,
+                    'type' => $type,
+                ],
+                'expects' => [
+                    '<div class="mb-3">',
+                    sprintf('<input class="form-control" type="%s" name="%s" >', $type, $name),
+                    '</div>',
+                ],
+            ];
+        }
+
+        return $providerData;
+    }
+
+    /**
      * @dataProvider provider_render
      * @param string $type
      * @param string $name
