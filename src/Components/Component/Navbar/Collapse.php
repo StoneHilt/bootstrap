@@ -21,6 +21,6 @@ class Collapse extends Base
      */
     public function __construct(public string $id, public array $items = [])
     {
-        //
+        parent::__construct();
     }
 }

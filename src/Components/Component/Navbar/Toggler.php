@@ -32,7 +32,7 @@ class Toggler extends Base
      */
     public function __construct(public string $target, public string $type = 'collapse', public ?string $label = null)
     {
-        //
+        parent::__construct();
     }
 
     /**

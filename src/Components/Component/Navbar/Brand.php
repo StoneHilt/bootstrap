@@ -21,6 +21,6 @@ class Brand extends Base
      */
     public function __construct(public ?string $image = null)
     {
-        //
+        parent::__construct();
     }
 }

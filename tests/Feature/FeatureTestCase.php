@@ -3,10 +3,12 @@
 namespace StoneHilt\Bootstrap\Tests\Feature;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Testing\Assert as PHPUnit;
 use Illuminate\Testing\Constraints\SeeInOrder;
 use Illuminate\Testing\TestComponent;
+use Illuminate\Testing\TestView;
 use Illuminate\View\Component;
 use Illuminate\View\ComponentAttributeBag;
 use Illuminate\View\ComponentSlot;
@@ -32,6 +34,7 @@ class FeatureTestCase extends TestCase
         $this->afterApplicationCreated(
             function () {
                 $this->app->make(PackageManifest::class)->build();
+                $this->app->make(Factory::class)->addLocation(__DIR__ . '/views');
             }
         );
 
@@ -114,35 +117,56 @@ class FeatureTestCase extends TestCase
      */
     protected function componentOnlySees(TestComponent $testComponent, array $values, bool $escape = true): void
     {
+        $this->renderedOnlyContains($testComponent->__toString(), $values, $escape);
+    }
+
+    /**
+     * @param TestView $testView
+     * @param array $values
+     * @param bool $escape
+     * @return void
+     */
+    protected function viewOnlySees(TestView $testView, array $values, bool $escape = true): void
+    {
+        $this->renderedOnlyContains($testView->__toString(), $values, $escape);
+    }
+
+    /**
+     * @param string $rendered
+     * @param array $values
+     * @param bool $escape
+     * @return void
+     */
+    protected function renderedOnlyContains(string $rendered, array $values, bool $escape = true): void
+    {
         $values = $escape ? array_map('e', $values) : $values;
-        $rendered = $testComponent->__toString();
 
-        PHPUnit::assertThat($values, new SeeInOrder($testComponent->__toString()));
+        PHPUnit::assertThat($values, new SeeInOrder($rendered));
 
-        $rendered = trim($rendered);
+        $trimRendered = trim($rendered);
         foreach ($values as $value) {
-            if (!str_starts_with($rendered, $value)) {
+            if (!str_starts_with($trimRendered, $value)) {
                 PHPUnit::fail(
                     sprintf(
                         "Failed asserting that \n'%s'\nonly contains: %s\nProblem with value '%s'\n  and rendering line '%s'",
-                        trim($testComponent->__toString()),
+                        trim($rendered),
                         substr(print_r($values, true), 7, -2),
                         $value,
-                        $rendered
+                        $trimRendered
                     )
                 );
             }
 
-            $rendered = trim(substr($rendered, strlen($value)));
+            $trimRendered = trim(substr($trimRendered, strlen($value)));
         }
 
-        if (trim($rendered) !== '') {
+        if (trim($trimRendered) !== '') {
             PHPUnit::fail(
                 sprintf(
                     "Failed asserting that \n%s'\nonly contains: %s\nExtra data '%s'",
-                    trim($testComponent->__toString()),
+                    trim($rendered),
                     substr(print_r($values, true), 7, -2),
-                    $rendered
+                    $trimRendered
                 )
             );
         }
