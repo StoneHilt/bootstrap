@@ -9,14 +9,11 @@ use Illuminate\Testing\Assert as PHPUnit;
 use Illuminate\Testing\Constraints\SeeInOrder;
 use Illuminate\Testing\TestComponent;
 use Illuminate\Testing\TestView;
-use Illuminate\View\Component;
 use Illuminate\View\ComponentAttributeBag;
 use Illuminate\View\ComponentSlot;
 use Illuminate\View\View;
 use PHPUnit\Framework\MockObject\Exception;
-use PHPUnit\Util\Exporter;
 use StoneHilt\Bootstrap\Components\Base;
-use StoneHilt\Bootstrap\Components\Col;
 use StoneHilt\Bootstrap\Tests\TestCase;
 
 /**
