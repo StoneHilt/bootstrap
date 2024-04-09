@@ -1,3 +1,12 @@
+{{--
+Navbar with explicit left & right components and dropdown between them
+ @package x-bootstrap::form.control
+ @subpackage x-slot:left
+ @subpackage x-slot:right
+ @subpackage x-bootstrap::component.navbar.brand
+ @subpackage x-bootstrap::component.navbar.toggler
+ @subpackage x-bootstrap::component.navbar.collapse
+--}}
 <x-bootstrap::component.navbar title="Demo Card" type="primary">
     <x-slot:left>
         <x-bootstrap::component.navbar.brand>StoneHilt</x-bootstrap::component.navbar.brand>
