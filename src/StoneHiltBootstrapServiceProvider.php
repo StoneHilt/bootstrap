@@ -3,6 +3,7 @@
 namespace StoneHilt\Bootstrap;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Support\Collection;
@@ -18,6 +19,7 @@ class StoneHiltBootstrapServiceProvider extends ServiceProvider
 {
     protected static string $packageConfigFile = __DIR__.'/../config/bootstrap.php';
     protected static string $packageResourceViews = __DIR__.'/../resources/views';
+    protected static string $exampleViews = __DIR__.'/../tests/Feature/views';
 
     /**
      * Bootstrap your package's services.
@@ -27,6 +29,7 @@ class StoneHiltBootstrapServiceProvider extends ServiceProvider
         $this->addCommandDetails();
         $this->addConfiguration();
         $this->addComponentViews();
+        $this->registerDemoManager();
     }
 
     /**
@@ -147,6 +150,22 @@ class StoneHiltBootstrapServiceProvider extends ServiceProvider
             function ($package) use ($packageManifest) {
                 $name = str_replace($packageManifest->vendorPath.'/', '', $package['name']);
                 return [$name => $package];
+            }
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerDemoManager(): void
+    {
+        $this->app->singleton(
+            BootstrapDemoManager::class,
+            function ($app) {
+                return new BootstrapDemoManager(
+                    static::$exampleViews,
+                    $this->app->make(Factory::class)
+                );
             }
         );
     }
