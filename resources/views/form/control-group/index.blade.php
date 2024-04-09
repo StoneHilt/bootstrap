@@ -2,7 +2,7 @@
     @if (isset($label))
         <label for="{{ $attributes['id'] }}" class="form-label">{{ $label }}</label>
     @endif
-    <div class="input=group">
+    <div class="input-group">
         {{ $slot }}
     </div>
     @if (isset($help))

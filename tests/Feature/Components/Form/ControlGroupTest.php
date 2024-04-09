@@ -42,7 +42,7 @@ class ControlGroupTest extends FeatureTestCase
                 ],
                 'expects' => [
                     '<div class="mb-3">',
-                    '<div class="input=group">',
+                    '<div class="input-group">',
                     '<span class="input-group-text">$</span>',
                     sprintf('<input class="form-control" name="%s" type="text">', $name),
                     '</div>',
@@ -57,7 +57,7 @@ class ControlGroupTest extends FeatureTestCase
                 ],
                 'expects' => [
                     '<div class="mb-3">',
-                    '<div class="input=group">',
+                    '<div class="input-group">',
                     sprintf('<input class="form-control" name="%s" type="text">', $name),
                     '<span class="input-group-text">%</span>',
                     '</div>',
@@ -72,7 +72,7 @@ class ControlGroupTest extends FeatureTestCase
                 ],
                 'expects' => [
                     '<div class="mb-3">',
-                    '<div class="input=group">',
+                    '<div class="input-group">',
                     sprintf('<input class="form-control" name="%s" type="text">', $name),
                     sprintf('<button class="btn" type="button">%s</button>', $btnContent),
                     '</div>',
@@ -88,7 +88,7 @@ class ControlGroupTest extends FeatureTestCase
                 ],
                 'expects' => [
                     '<div class="mb-3">',
-                    '<div class="input=group">',
+                    '<div class="input-group">',
                     '<span class="input-group-text">$</span>',
                     sprintf('<input class="form-control" name="%s" type="text">', $name),
                     sprintf('<button class="btn" type="button" id="group-btn-id">%s</button>', $btnContent),
@@ -105,7 +105,7 @@ class ControlGroupTest extends FeatureTestCase
                 ],
                 'expects' => [
                     '<div class="mb-3">',
-                    '<div class="input=group">',
+                    '<div class="input-group">',
                     '<span class="input-group-text">Login</span>',
                     sprintf('<input class="form-control" name="%s" type="text">', $name),
                     sprintf('<input class="form-control" name="%s" type="password">', $altInputName),
@@ -122,7 +122,7 @@ class ControlGroupTest extends FeatureTestCase
                 ],
                 'expects' => [
                     '<div class="mb-3">',
-                    '<div class="input=group">',
+                    '<div class="input-group">',
                     '<span class="input-group-text">Description</span>',
                     sprintf('<textarea class="form-control" name="%s" rows="3">%s</textarea>', $name, $textareaContent),
                     '</div>',
