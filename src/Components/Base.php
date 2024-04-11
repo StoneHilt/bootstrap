@@ -118,7 +118,7 @@ abstract class Base extends Component
     protected function transformViewData(array $viewData): array
     {
         foreach (static::$mapToSlot as $property) {
-            if (!($property instanceof ComponentSlot)) {
+            if (!isset($viewData[$property]) || !($viewData[$property] instanceof ComponentSlot)) {
                 $viewData[$property] = new ComponentSlot(strval($viewData[$property] ?? ''));
             }
         }
