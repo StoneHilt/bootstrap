@@ -1,6 +1,6 @@
 <{{ $type }} {{ $attributes }}>
     {{ $slot }}
-    @isset($secondary)
-    <small class="text-body-secondary">{{ $secondary }}</small>
+    @if($secondary->isNotEmpty())
+    <small {{ $secondary->attributes->class([$secondary->attributes->prepends('text-body-secondary')]) }}>{{ $secondary }}</small>
     @endisset
 </{{ $type }}>

@@ -14,6 +14,112 @@ use StoneHilt\Bootstrap\Tests\Feature\FeatureTestCase;
 class HeadingTest extends FeatureTestCase
 {
     /**
+     * @var array|string[] $types
+     */
+    protected static array $types = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+    /**
+     * @dataProvider provider_view
+     * @param string $view
+     * @param array $data
+     * @param array $expects
+     * @return void
+     */
+    public function test_view(string $view, array $data, array $expects)
+    {
+        $this->viewOnlySees($this->view($view, $data), $expects, false);
+    }
+
+    /**
+     * @return array[]
+     */
+    public static function provider_view(): array
+    {
+        $content   = static::faker()->text();
+        $secondary = static::faker()->text();
+
+        $providerData = [];
+
+        foreach (static::$types as $type) {
+            $providerData[] = [
+                'view' => 'typography.heading.simple',
+                'data' => [
+                    'type'    => $type,
+                    'content' => $content,
+                ],
+                'expects' => [
+                    sprintf('<%s class="">', $type),
+                    $content,
+                    sprintf('</%s>', $type),
+                ],
+            ];
+
+            $providerData[] = [
+                'view' => 'typography.heading.secondary_attribute',
+                'data' => [
+                    'type'      => $type,
+                    'content'   => $content,
+                    'secondary' => $secondary,
+                ],
+                'expects' => [
+                    sprintf('<%s class="">', $type),
+                    $content,
+                    sprintf('<small class="text-body-secondary">%s</small>', $secondary),
+                    sprintf('</%s>', $type),
+                ],
+            ];
+
+            $providerData[] = [
+                'view' => 'typography.heading.secondary_shifted_right',
+                'data' => [
+                    'type'      => $type,
+                    'content'   => $content,
+                    'secondary' => $secondary,
+                ],
+                'expects' => [
+                    sprintf('<%s class="">', $type),
+                    $content,
+                    sprintf('<small class="text-body-secondary float-end" id="secondary-heading">%s</small>', $secondary),
+                    sprintf('</%s>', $type),
+                ],
+            ];
+
+            for ($i = 1; $i <= 6; $i++) {
+                $providerData[] = [
+                    'view' => 'typography.heading.type_display',
+                    'data' => [
+                        'type'    => $type,
+                        'display' => $i,
+                        'content' => $content,
+                    ],
+                    'expects' => [
+                        sprintf('<%s class="display-%d">', $type, $i),
+                        $content,
+                        sprintf('</%s>', $type),
+                    ],
+                ];
+            }
+        }
+
+        for ($i = 1; $i <= 6; $i++) {
+            $providerData[] = [
+                'view' => 'typography.heading.display',
+                'data' => [
+                    'display' => $i,
+                    'content' => $content,
+                ],
+                'expects' => [
+                    sprintf('<h1 class="display-%d">', $i),
+                    $content,
+                    '</h1>',
+                ],
+            ];
+        }
+
+        return $providerData;
+    }
+
+    /**
      * @dataProvider provider_render
      * @param string $type
      * @param int|null $display
@@ -50,13 +156,12 @@ class HeadingTest extends FeatureTestCase
     {
         $faker = static::faker();
 
-        $types         = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
         $displays      = [null, 1, 2, 3, 4, 5, 6];
         $secondaryText = [null, $faker->words(5, true)];
 
         $providerData = [];
 
-        foreach ($types as $type) {
+        foreach (static::$types as $type) {
             foreach ($displays as $display) {
                 foreach ($secondaryText as $secondary) {
                     foreach (['' => null, ' id="This-id"' => ['id' => 'This-id']] as $attributeString => $attributes) {
