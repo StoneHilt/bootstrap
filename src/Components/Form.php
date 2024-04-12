@@ -3,10 +3,12 @@
 namespace StoneHilt\Bootstrap\Components;
 
 use Illuminate\Routing\Exceptions\UrlGenerationException;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\View\ComponentAttributeBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * Class Form
@@ -136,6 +138,15 @@ class Form extends Base
         $route = app('router')
             ->getRoutes()
             ->getByName($name);
+
+        if (!($route instanceof Route)) {
+            throw new RouteNotFoundException(
+                sprintf(
+                    'Could not find route "%s"',
+                    $name
+                )
+            );
+        }
 
         $method = Arr::first($route->methods());
 

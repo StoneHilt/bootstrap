@@ -17,6 +17,13 @@ class Heading extends Base
     use PrefixNames;
 
     /**
+     * @var array $mapToSlot List of properties that should be mapped to a ComponentSlot instance before rendering
+     */
+    protected static array $mapToSlot = [
+        'secondary'
+    ];
+
+    /**
      * @var array|string[] $types
      */
     protected static array $types = [
