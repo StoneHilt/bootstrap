@@ -14,6 +14,142 @@ use StoneHilt\Bootstrap\Tests\Feature\FeatureTestCase;
 class CardTest extends FeatureTestCase
 {
     /**
+     * @dataProvider provider_view
+     * @param string $view
+     * @param array $data
+     * @param array $expects
+     * @return void
+     */
+    public function test_view(string $view, array $data, array $expects)
+    {
+        $this->viewOnlySees($this->view($view, $data), $expects, false);
+    }
+
+    /**
+     * @return array[]
+     */
+    public static function provider_view(): array
+    {
+        $content       = static::faker()->text();
+        $header        = static::faker()->text();
+        $headerClass   = static::faker()->slug(2);
+        $title         = static::faker()->text();
+        $titleClass    = static::faker()->slug(2);
+        $subtitle      = static::faker()->text();
+        $subtitleClass = static::faker()->slug(2);
+        $text          = static::faker()->text();
+        $textClass     = static::faker()->slug(2);
+        $footer        = static::faker()->text();
+        $footerClass   = static::faker()->slug(2);
+
+        return [
+            [
+                'view' => 'component.card.simple_body',
+                'data' => [
+                    'content' => $content,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'component.card.body_header',
+                'data' => [
+                    'content' => $content,
+                    'header'  => $header,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    sprintf('<div class="card-header">%s</div>', $header),
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'component.card.body_footer',
+                'data' => [
+                    'content' => $content,
+                    'footer'  => $footer,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    sprintf('<div class="card-footer">%s</div>', $footer),
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'component.card.body_header_with_attributes',
+                'data' => [
+                    'content'     => $content,
+                    'header'      => $header,
+                    'headerClass' => $headerClass,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    sprintf('<div class="card-header %s" id="the-header">%s</div>', $headerClass, $header),
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'component.card.body_footer_with_attributes',
+                'data' => [
+                    'content'     => $content,
+                    'footer'      => $footer,
+                    'footerClass' => $footerClass,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    sprintf('<div class="card-footer %s" id="the-footer">%s</div>', $footerClass, $footer),
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'component.card.all_slots',
+                'data' => [
+                    'content'       => $content,
+                    'header'        => $header,
+                    'headerClass'   => $headerClass,
+                    'title'         => $title,
+                    'titleClass'    => $titleClass,
+                    'subtitle'      => $subtitle,
+                    'subtitleClass' => $subtitleClass,
+                    'text'          => $text,
+                    'textClass'     => $textClass,
+                    'footer'        => $footer,
+                    'footerClass'   => $footerClass,
+                ],
+                'expects' => [
+                    '<div class="card" id="the-card">',
+                    sprintf('<div class="card-header %s" id="the-header">%s</div>', $headerClass, $header),
+                    '<div class="card-body">',
+                    sprintf('<h5 class="card-title %s" id="the-title">%s</h5>', $titleClass, $title),
+                    sprintf('<h6 class="card-subtitle mb-2 text-muted %s" id="the-subtitle">%s</h6>', $subtitleClass, $subtitle),
+                    sprintf('<p class="card-text %s" id="the-text">%s</p>', $textClass, $text),
+                    $content,
+                    '</div>',
+                    sprintf('<div class="card-footer %s" id="the-footer">%s</div>', $footerClass, $footer),
+                    '</div>',
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @dataProvider provider_render
      * @param string|null $variant
      * @param string|null $title
