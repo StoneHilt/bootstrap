@@ -68,21 +68,37 @@ abstract class Base extends Component
             $this->validateAttributes($viewData['attributes']);
             $viewData['attributes'] = $this->transformAttributes($viewData['attributes']);
 
-            return new HtmlString(
-                $this->view($this->getView(), $viewData)->render()
-            );
+            return $this->view($this->getView(), $viewData);
         };
     }
 
     /**
      * Resolve the Blade view or view file that should be used when rendering the component.
      *
-     * @return ViewContract|Htmlable|\Closure|string
+     * @return Closure|Htmlable|ViewContract
      * @throws ValidationException
      */
     public function resolveView()
     {
-        return $this->render();
+        $view = $this->render();
+
+        if ($view instanceof ViewContract) {
+            return $view;
+        }
+
+        if ($view instanceof Htmlable) {
+            return $view;
+        }
+
+        return function (array $data = []) use ($view) {
+            $renderedView = $view($data);
+
+            if ($renderedView instanceof ViewContract) {
+                return new HtmlString($renderedView->render());
+            }
+
+            return $renderedView;
+        };
     }
 
     /**

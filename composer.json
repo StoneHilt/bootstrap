@@ -1,6 +1,6 @@
 {
     "name": "stonehilt/bootstrap",
-    "version": "10.0.4",
+    "version": "10.0.5",
     "description": "StoneHilt Component integration for Bootstrap CSS library",
     "minimum-stability": "stable",
     "license": "proprietary",
