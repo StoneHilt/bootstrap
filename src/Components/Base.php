@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\Component;
 use Illuminate\View\ComponentAttributeBag;
 use Illuminate\View\ComponentSlot;
+use StoneHilt\Blade\View\SlotCollection;
 
 /**
  * Class Base
@@ -134,8 +135,23 @@ abstract class Base extends Component
     protected function transformViewData(array $viewData): array
     {
         foreach (static::$mapToSlot as $property) {
-            if (!isset($viewData[$property]) || !($viewData[$property] instanceof ComponentSlot)) {
-                $viewData[$property] = new ComponentSlot(strval($viewData[$property] ?? ''));
+            if (!isset($viewData[$property])) {
+                $viewData[$property] = new ComponentSlot('');
+
+            } elseif (!($viewData[$property] instanceof ComponentSlot) && !($viewData[$property] instanceof SlotCollection)) {
+                if (is_iterable($viewData[$property])) {
+                    $collection = new SlotCollection();
+
+                    foreach ($viewData[$property] as $key => $item) {
+                        $attributes = !is_numeric($key) ? ['id' => $key] : [];
+
+                        $collection->push(new ComponentSlot($item, $attributes));
+                    }
+
+                    $viewData[$property] = $collection;
+                } else {
+                    $viewData[$property] = new ComponentSlot(strval($viewData[$property] ?? ''));
+                }
             }
         }
 
