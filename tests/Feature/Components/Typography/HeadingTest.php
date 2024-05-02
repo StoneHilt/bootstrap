@@ -70,6 +70,21 @@ class HeadingTest extends FeatureTestCase
             ];
 
             $providerData[] = [
+                'view' => 'typography.heading.secondary_attribute_method',
+                'data' => [
+                    'type'      => $type,
+                    'content'   => $content,
+                    'secondary' => sprintf('<i>%s</i>', $secondary),
+                ],
+                'expects' => [
+                    sprintf('<%s class="">', $type),
+                    $content,
+                    sprintf('<small class="text-body-secondary" id="secondary-heading"><em><i>%s</i></em></small>', $secondary),
+                    sprintf('</%s>', $type),
+                ],
+            ];
+
+            $providerData[] = [
                 'view' => 'typography.heading.secondary_shifted_right',
                 'data' => [
                     'type'      => $type,
