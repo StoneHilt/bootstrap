@@ -1,4 +1,6 @@
 <div class="{{ $wrapperClass() }}">
     <input {{ $attributes }}>
-    <label for="{{ $attributes['id'] }}" class="{{ $labelClass() }}">{{ $label }}</label>
+    @if (isset($label))
+        <label for="{{ $attributes['id'] }}" class="{{ $labelClass() }}">{{ $label }}</label>
+    @endif
 </div>
