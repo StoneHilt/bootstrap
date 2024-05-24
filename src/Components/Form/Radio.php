@@ -77,7 +77,7 @@ class Radio extends AbstractFormComponent
     /**
      * @return string
      */
-    public function labelClass(): string
+    public function labelClass(mixed $value): string
     {
         if (str_starts_with($this->type, 'btn-')) {
             return sprintf(
