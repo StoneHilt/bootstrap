@@ -18,20 +18,6 @@ class Table extends Base
     protected string $viewName = 'bootstrap::table';
 
     /**
-     * @var array|string[] $variants
-     */
-    protected static array $variants = [
-        'primary',
-        'secondary',
-        'success',
-        'danger',
-        'warning',
-        'info',
-        'light',
-        'dark',
-    ];
-
-    /**
      * @var array|string[] $accents
      */
     protected static array $accents = [
