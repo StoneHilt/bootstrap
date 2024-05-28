@@ -2,8 +2,6 @@
 
 namespace StoneHilt\Bootstrap\Components\Form;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Illuminate\View\ComponentAttributeBag;
 use StoneHilt\Bootstrap\Components\Base;

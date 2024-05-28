@@ -47,18 +47,21 @@ To change the version of Bootstrap used, the config will need to be published.
 | Card                  | x-bootstrap::component.card       |
 | Carousel              | x-bootstrap::component.carousel   |
 | Dropdown              | x-bootstrap::component.dropdown   |
+| List Group            | x-bootstrap::component.list-group |
 | Nav                   | x-bootstrap::component.nav        |
 | Navbar                | x-bootstrap::component.navbar     |
 | Progress              | x-bootstrap::component.progress   |
+| Tabs                  | x-bootstrap::component.tabs       |
 
 
-| Form     | HTML Tag                   | 
-|----------|----------------------------|
-| Form     | x-bootstrap::form          |
-| Control  | x-bootstrap::form.control  |
-| Select   | x-bootstrap::form.select   |
-| Checkbox | x-bootstrap::form.checkbox |
-| Radio    | x-bootstrap::form.radio    |
+| Form          | HTML Tag                        | 
+|---------------|---------------------------------|
+| Form          | x-bootstrap::form               |
+| Checkbox      | x-bootstrap::form.checkbox      |
+| Control       | x-bootstrap::form.control       |
+| Control Group | x-bootstrap::form.control-group |
+| Radio         | x-bootstrap::form.radio         |
+| Select        | x-bootstrap::form.select        |
 
 
 | Typography | HTML Tag                        | 
@@ -83,12 +86,13 @@ To change the version of Bootstrap used, the config will need to be published.
 | Javascript | x-bootstrap::javascript  |
 
 # Examples
+See `tests/Feature/views` for additional examples of usages of the various parameters and layout approaches.
 
 ## Bootstrap's Components
 ### Accordion
 https://getbootstrap.com/docs/5.3/components/accordion/
 ```html
-<x-bootstrap::component.accordion id="test" ref="somehtin">
+<x-bootstrap::component.accordion id="test" ref="something">
     <x-bootstrap::component.accordion-item header="Accordion Text 1">
         This is the body of block 1
     </x-bootstrap::component.accordion-item>
