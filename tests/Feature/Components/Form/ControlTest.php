@@ -123,6 +123,44 @@ class ControlTest extends FeatureTestCase
             ];
         }
 
+        $horizontalWidths = [
+            [
+                'data' => [6],
+                'labelClass' => 'col-6',
+                'wrapperClass' => 'col-6',
+            ],
+            [
+                'data' => [9],
+                'labelClass' => 'col-3',
+                'wrapperClass' => 'col-9',
+            ],
+            [
+                'data' => ['sm-12', 'md-9'],
+                'labelClass' => 'col-sm-12 col-md-3',
+                'wrapperClass' => 'col-sm-12 col-md-9',
+            ],
+        ];
+
+        foreach ($horizontalWidths as $classes) {
+            $providerData[] = [
+                'view' => 'form.control.horizontal',
+                'data' => [
+                    'id'              => $id,
+                    'label'           => $label,
+                    'name'            => $name,
+                    'horizontalWidth' => $classes['data'],
+                ],
+                'expects' => [
+                    '<div class="mb-3 row">',
+                    sprintf('<label for="%s" class="%s col-form-label">%s</label>', $id, $classes['labelClass'], $label),
+                    sprintf('<div class="%s">', $classes['wrapperClass']),
+                    sprintf('<input class="form-control" id="%s" type="text" name="%s" >', $id, $name),
+                    '</div>',
+                    '</div>',
+                ],
+            ];
+        }
+
         return $providerData;
     }
 

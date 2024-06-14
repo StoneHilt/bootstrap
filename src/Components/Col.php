@@ -5,6 +5,7 @@ namespace StoneHilt\Bootstrap\Components;
 use Illuminate\Validation\Rule;
 use Illuminate\View\ComponentAttributeBag;
 use StoneHilt\Bootstrap\Components\Traits\PrefixNames;
+use StoneHilt\Bootstrap\Components\Traits\ResponsiveSizes;
 
 /**
  * Class Col
@@ -15,24 +16,12 @@ use StoneHilt\Bootstrap\Components\Traits\PrefixNames;
 class Col extends Base
 {
     use PrefixNames;
+    use ResponsiveSizes;
 
     /**
      * @var string $viewName
      */
     protected string $viewName = 'bootstrap::col';
-
-    /**
-     * @var array|string[] $types
-     */
-    protected static array $types = [
-        null,
-        'xs',
-        'sm',
-        'md',
-        'lg',
-        'xl',
-        'xxl',
-    ];
 
     /**
      * @var array|string[] $orders
@@ -104,15 +93,11 @@ class Col extends Base
     {
         $rules = [];
 
-        $validWidths  = [];
+        $validWidths  = static::validResponseSizes();
         $validOrders  = [];
         $validOffsets = [];
 
-        foreach (static::$types as $type) {
-            for ($i = 1; $i <= 12; $i++) {
-                $validWidths[] = isset($type) ? $type . '-' . $i : $i;
-            }
-
+        foreach (static::$responsiveTypes as $type) {
             foreach (static::$orders as $order) {
                 $validOrders[] = isset($type) ? $type . '-' . $order : $order;
             }
