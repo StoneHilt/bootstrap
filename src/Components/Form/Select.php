@@ -12,7 +12,6 @@ use Illuminate\View\ComponentAttributeBag;
  */
 class Select extends AbstractFormComponent
 {
-
     /**
      * @var string $viewName
      */
@@ -29,8 +28,9 @@ class Select extends AbstractFormComponent
         public bool $disabled = false,
         public bool $multiple = false,
         public bool $horizontal = false,
+        public string|array $horizontalWidth = 'sm-10',
     ) {
-        parent::__construct($this->name, $this->label, $this->size);
+        parent::__construct($this->name, $this->label, $this->size, $this->horizontal, $this->horizontalWidth);
     }
 
     /**

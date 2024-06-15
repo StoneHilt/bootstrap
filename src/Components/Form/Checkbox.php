@@ -54,7 +54,7 @@ class Checkbox extends AbstractFormComponent
         public bool $horizontal = false,
         public bool $reverse = false
     ) {
-        parent::__construct($this->name, $this->label, $this->size);
+        parent::__construct($this->name, $this->label, $this->size, $this->horizontal);
     }
 
     /**

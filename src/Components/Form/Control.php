@@ -18,7 +18,16 @@ class Control extends AbstractFormComponent
     protected string $viewName = 'bootstrap::form.control';
 
     /**
-     * Create a new component instance.
+     * @param string $type
+     * @param string $name
+     * @param string|null $label
+     * @param string|null $size
+     * @param bool $disabled
+     * @param bool $readonly
+     * @param bool $plaintext
+     * @param bool $horizontal
+     * @param string|array $horizontalWidth Apply specific width to the input when in horizontal mode
+     * @param array|null $datalist
      */
     public function __construct(
         public string $type,
@@ -29,9 +38,10 @@ class Control extends AbstractFormComponent
         public bool $readonly = false,
         public bool $plaintext = false,
         public bool $horizontal = false,
+        public string|array $horizontalWidth = 'sm-10',
         public ?array $datalist = null
     ) {
-        parent::__construct($this->name, $this->label, $this->size);
+        parent::__construct($this->name, $this->label, $this->size, $this->horizontal, $this->horizontalWidth);
     }
 
     /**
