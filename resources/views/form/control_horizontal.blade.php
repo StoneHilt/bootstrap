@@ -1,8 +1,8 @@
-<div class="mb-3 row">
+<div class="{{ $wrapperClass() }}">
     @if (isset($label))
-        <label for="{{ $attributes['id'] }}" class="col-sm-2 col-form-label">{{ $label }}</label>
+        <label for="{{ $attributes['id'] }}" class="{{ $horizontalLabelWidth() }} col-form-label">{{ $label }}</label>
     @endif
-    <div class="col-sm-10">
+    <div class="{{ $horizontalWidth() }}">
         <input {{ $attributes }} @if (isset($datalist)) list="{{ $attributes['id'] }}-datalist" @endif>
     </div>
     @if (isset($datalist))

@@ -22,7 +22,22 @@ class ControlGroup extends Base
     public function __construct(
         public ?string $label = null,
         public ?string $help = null,
+        public string|array $wrapperClass = 'mb-3',
     ) {
         parent::__construct();
+    }
+
+    /**
+     * @return string
+     */
+    public function wrapperClass(): string
+    {
+        $classes = [];
+
+        if (!empty($this->wrapperClass)) {
+            $classes = array_merge($classes, (array)$this->wrapperClass);
+        }
+
+        return implode(' ', $classes);
     }
 }

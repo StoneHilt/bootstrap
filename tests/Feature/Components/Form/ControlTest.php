@@ -34,6 +34,18 @@ class ControlTest extends FeatureTestCase
     ];
 
     /**
+     * @var array|string[]
+     */
+    protected static array $sizes = [
+        null,
+        'sm',
+        'md',
+        'lg',
+        'xl',
+        'xxl',
+    ];
+
+    /**
      * @dataProvider provider_view
      * @param string $view
      * @param array $data
@@ -50,10 +62,12 @@ class ControlTest extends FeatureTestCase
      */
     public static function provider_view(): array
     {
-        $label    = static::faker()->words(3, true);
-        $name     = static::faker()->slug(2);
-        $id       = static::faker()->slug(1);
-        $datalist = static::faker()->words();
+        $faker = static::faker();
+
+        $label    = $faker->words(3, true);
+        $name     = $faker->slug(2);
+        $id       = $faker->slug(1);
+        $datalist = $faker->words();
 
         $providerData = [
             [
@@ -121,6 +135,115 @@ class ControlTest extends FeatureTestCase
                     '</div>',
                 ],
             ];
+        }
+
+        $horizontalWidths = [
+            [
+                'data' => [6],
+                'labelClass' => 'col-6',
+                'inputWrapperClass' => 'col-6',
+            ],
+            [
+                'data' => [9],
+                'labelClass' => 'col-3',
+                'inputWrapperClass' => 'col-9',
+            ],
+            [
+                'data' => ['sm-12', 'md-9'],
+                'labelClass' => 'col-sm-12 col-md-3',
+                'inputWrapperClass' => 'col-sm-12 col-md-9',
+            ],
+        ];
+
+        foreach ($horizontalWidths as $classes) {
+            $providerData[] = [
+                'view' => 'form.control.horizontal',
+                'data' => [
+                    'id'              => $id,
+                    'label'           => $label,
+                    'name'            => $name,
+                    'horizontalWidth' => $classes['data'],
+                ],
+                'expects' => [
+                    '<div class="row mb-3">',
+                    sprintf('<label for="%s" class="%s col-form-label">%s</label>', $id, $classes['labelClass'], $label),
+                    sprintf('<div class="%s">', $classes['inputWrapperClass']),
+                    sprintf('<input class="form-control" id="%s" type="text" name="%s" >', $id, $name),
+                    '</div>',
+                    '</div>',
+                ],
+            ];
+        }
+
+        foreach (['text', 'email'] as $type) {
+            foreach ([null, '', 'test@example.com'] as $value) {
+                foreach (static::$sizes as $size) {
+                    foreach ([true, false] as $disabled) {
+                        foreach ([true, false] as $readonly) {
+                            foreach ([true, false] as $plaintext) {
+                                foreach ([true, false] as $horizontal) {
+                                    foreach ($horizontalWidths as $classes) {
+                                        foreach (['', 'mb-3', 'm-2'] as $wrapperClass) {
+                                            $providerData[] = [
+                                                'view' => 'form.control.all_parameters',
+                                                'data' => [
+                                                    'type'            => $type,
+                                                    'name'            => $name,
+                                                    'id'              => $id,
+                                                    'value'           => $value,
+                                                    'label'           => $label,
+                                                    'size'            => $size,
+                                                    'disabled'        => $disabled,
+                                                    'readonly'        => $readonly,
+                                                    'plaintext'       => $plaintext,
+                                                    'horizontal'      => $horizontal,
+                                                    'horizontalWidth' => $classes['data'],
+                                                    'datalist'        => $datalist,
+                                                    'wrapperClass'    => $wrapperClass,
+                                                ],
+                                                'expects' => array_merge(
+                                                    [
+                                                        sprintf('<div class="%s">', static::buildClassList([$horizontal ? 'row' : '', $wrapperClass])),
+                                                        sprintf(
+                                                            '<label for="%s" class="%s">%s</label>',
+                                                            $id,
+                                                            $horizontal ? $classes['labelClass'] . ' col-form-label' : 'form-label',
+                                                            $label
+                                                        ),
+                                                        $horizontal ? sprintf('<div class="%s">', $classes['inputWrapperClass']) : null,
+                                                        sprintf(
+                                                            '<input class="%s%s" id="%s"%s type="%s"%s%s name="%s"  list="%s-datalist" >',
+                                                            $plaintext ? 'form-control-plaintext' : 'form-control',
+                                                            isset($size) ? ' form-control-' . $size : '',
+                                                            $id,
+                                                            isset($value) ? ' value="' . $value . '"' : '',
+                                                            $type,
+                                                            $disabled ? ' disabled="disabled"' : '',
+                                                            $readonly ? ' readonly="readonly"' : '',
+                                                            $name,
+                                                            $id
+                                                        ),
+                                                        $horizontal ? '</div>' : null,
+                                                        sprintf('<datalist id="%s-datalist">', $id),
+                                                    ],
+                                                    array_map(
+                                                        fn($val) => sprintf('<option value="%s">', $val),
+                                                        $datalist
+                                                    ),
+                                                    [
+                                                        '</datalist>',
+                                                        '</div>',
+                                                    ],
+                                                ),
+                                            ];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return $providerData;
