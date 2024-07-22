@@ -1,4 +1,4 @@
-<div class="mb-3">
+<div class="{{ $wrapperClass() }}">
     @if (isset($label))
     <label for="{{ $attributes['id'] }}" class="form-label">{{ $label }}</label>
     @endif

@@ -52,9 +52,16 @@ class Checkbox extends AbstractFormComponent
         public ?string $size = null,
         public bool $disabled = false,
         public bool $horizontal = false,
-        public bool $reverse = false
+        public bool $reverse = false,
+        public string|array $wrapperClass = '',
     ) {
-        parent::__construct($this->name, $this->label, $this->size, $this->horizontal);
+        parent::__construct(
+            name: $this->name,
+            label: $this->label,
+            size: $this->size,
+            horizontal: $this->horizontal,
+            wrapperClass: $this->wrapperClass
+        );
     }
 
     /**
@@ -74,6 +81,10 @@ class Checkbox extends AbstractFormComponent
 
         if ($this->type === 'switch') {
             $classes[] = 'form-switch';
+        }
+
+        if (!empty($this->wrapperClass)) {
+            $classes = array_merge($classes, (array)$this->wrapperClass);
         }
 
         return implode(' ', $classes);

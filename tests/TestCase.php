@@ -51,4 +51,16 @@ abstract class TestCase extends IlluminateTestCase
     {
         return Factory::create($locale ?? Factory::DEFAULT_LOCALE);
     }
+
+    /**
+     * @param array $classes
+     * @return string
+     */
+    protected static function buildClassList(array $classes): string
+    {
+        return implode(
+            ' ',
+            array_filter($classes)
+        );
+    }
 }

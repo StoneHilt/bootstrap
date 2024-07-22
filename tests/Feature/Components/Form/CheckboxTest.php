@@ -101,38 +101,43 @@ class CheckboxTest extends FeatureTestCase
                 foreach ([true, false] as $horizontal) {
                     foreach ([true, false] as $reverse) {
                         foreach (['sm', 'md', 'lg', 'xl', 'xxl', null] as $size) {
-                            $providerData[] = [
-                                'view' => 'form.checkbox.all_parameters',
-                                'data' => [
-                                    'name'       => $name,
-                                    'label'      => $label,
-                                    'value'      => $value,
-                                    'id'         => $id,
-                                    'checked'    => $checked,
-                                    'disabled'   => $disabled,
-                                    'horizontal' => $horizontal,
-                                    'reverse'    => $reverse,
-                                    'size'       => $size,
-                                ],
-                                'expects' => [
-                                    sprintf(
-                                        '<div class="form-check%s%s">',
-                                        $horizontal ? ' form-check-inline' : '',
-                                        $reverse ? ' form-check-reverse' : '',
-                                    ),
-                                    sprintf(
-                                        '<input class="form-check-input%s" id="%s" value="%s" type="checkbox"%s%s name="%s">',
-                                        isset($size) ? ' form-control-' . $size : '',
-                                        $id,
-                                        $value,
-                                        $disabled ? ' disabled="disabled"' : '',
-                                        $checked ? ' checked="checked"' : '',
-                                        $name
-                                    ),
-                                    sprintf('<label for="%s" class="form-check-label">%s</label>', $id, $label),
-                                    '</div>',
-                                ],
-                            ];
+                            foreach (['', 'mb-3'] as $wrapperClass) {
+
+                                $providerData[] = [
+                                    'view' => 'form.checkbox.all_parameters',
+                                    'data' => [
+                                        'name'         => $name,
+                                        'label'        => $label,
+                                        'value'        => $value,
+                                        'id'           => $id,
+                                        'checked'      => $checked,
+                                        'disabled'     => $disabled,
+                                        'horizontal'   => $horizontal,
+                                        'reverse'      => $reverse,
+                                        'size'         => $size,
+                                        'wrapperClass' => $wrapperClass,
+                                    ],
+                                    'expects' => [
+                                        sprintf(
+                                            '<div class="form-check%s%s%s">',
+                                            $horizontal ? ' form-check-inline' : '',
+                                            $reverse ? ' form-check-reverse' : '',
+                                            !empty($wrapperClass) ? ' ' . $wrapperClass : '',
+                                        ),
+                                        sprintf(
+                                            '<input class="form-check-input%s" id="%s" value="%s" type="checkbox"%s%s name="%s">',
+                                            isset($size) ? ' form-control-' . $size : '',
+                                            $id,
+                                            $value,
+                                            $disabled ? ' disabled="disabled"' : '',
+                                            $checked ? ' checked="checked"' : '',
+                                            $name
+                                        ),
+                                        sprintf('<label for="%s" class="form-check-label">%s</label>', $id, $label),
+                                        '</div>',
+                                    ],
+                                ];
+                            }
                         }
                     }
                 }

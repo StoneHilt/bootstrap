@@ -1,4 +1,4 @@
-<div class="mb-3 row">
+<div class="{{ $wrapperClass() }}">
     @if (isset($label))
         <label for="{{ $attributes['id'] }}" class="{{ $horizontalLabelWidth() }} col-form-label">{{ $label }}</label>
     @endif

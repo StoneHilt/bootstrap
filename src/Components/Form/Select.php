@@ -29,8 +29,16 @@ class Select extends AbstractFormComponent
         public bool $multiple = false,
         public bool $horizontal = false,
         public string|array $horizontalWidth = 'sm-10',
+        public string|array $wrapperClass = 'mb-3',
     ) {
-        parent::__construct($this->name, $this->label, $this->size, $this->horizontal, $this->horizontalWidth);
+        parent::__construct(
+            name: $this->name,
+            label: $this->label,
+            size: $this->size,
+            horizontal: $this->horizontal,
+            horizontalWidth: $this->horizontalWidth,
+            wrapperClass: $this->wrapperClass
+        );
     }
 
     /**
@@ -40,6 +48,24 @@ class Select extends AbstractFormComponent
     public function isSelected(string $value): bool
     {
         return ($this->attributes->get('value', null) === $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function wrapperClass(): string
+    {
+        $classes = [];
+
+        if ($this->horizontal) {
+            $classes[] = 'row';
+        }
+
+        if (!empty($this->wrapperClass)) {
+            $classes = array_merge($classes, (array)$this->wrapperClass);
+        }
+
+        return implode(' ', $classes);
     }
 
     /**
