@@ -38,6 +38,7 @@ abstract class AbstractFormComponent extends Base
         public ?string $size = null,
         public bool $horizontal = false,
         public string|array $horizontalWidth = 'sm-10',
+        public string|array $wrapperClass = 'mb-3',
     ) {
         parent::__construct();
     }

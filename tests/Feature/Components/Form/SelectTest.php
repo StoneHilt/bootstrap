@@ -104,7 +104,7 @@ class SelectTest extends FeatureTestCase
                 ],
                 'expects' => array_merge(
                     [
-                        '<div class="mb-3 row">',
+                        '<div class="row mb-3">',
                         sprintf('<label for="%s" class="col-sm-2 col-form-label">%s</label>', $id, $label),
                         '<div class="col-sm-10">',
                         sprintf('<select class="form-control" id="%s" name="%s">', $id, $name),

@@ -28,6 +28,7 @@ class Control extends AbstractFormComponent
      * @param bool $horizontal
      * @param string|array $horizontalWidth Apply specific width to the input when in horizontal mode
      * @param array|null $datalist
+     * @param string|array $wrapperClass
      */
     public function __construct(
         public string $type,
@@ -39,9 +40,35 @@ class Control extends AbstractFormComponent
         public bool $plaintext = false,
         public bool $horizontal = false,
         public string|array $horizontalWidth = 'sm-10',
-        public ?array $datalist = null
+        public ?array $datalist = null,
+        public string|array $wrapperClass = 'mb-3',
     ) {
-        parent::__construct($this->name, $this->label, $this->size, $this->horizontal, $this->horizontalWidth);
+        parent::__construct(
+            name: $this->name,
+            label: $this->label,
+            size: $this->size,
+            horizontal: $this->horizontal,
+            horizontalWidth: $this->horizontalWidth,
+            wrapperClass: $this->wrapperClass
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function wrapperClass(): string
+    {
+        $classes = [];
+
+        if ($this->horizontal) {
+            $classes[] = 'row';
+        }
+
+        if (!empty($this->wrapperClass)) {
+            $classes = array_merge($classes, (array)$this->wrapperClass);
+        }
+
+        return implode(' ', $classes);
     }
 
     /**

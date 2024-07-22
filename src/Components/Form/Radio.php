@@ -51,9 +51,15 @@ class Radio extends AbstractFormComponent
         public ?string $size = null,
         public array $disabled = [],
         public bool $horizontal = false,
-        public bool $reverse = false
+        public bool $reverse = false,
+        public string|array $wrapperClass = 'mb-3',
     ) {
-        parent::__construct($this->name, null, $this->size);
+        parent::__construct(
+            name: $this->name,
+            size: $this->size,
+            horizontal: $this->horizontal,
+            wrapperClass: $this->wrapperClass
+        );
     }
 
     /**

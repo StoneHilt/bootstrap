@@ -21,4 +21,5 @@ Form checkbox with all available parameters
     :disabled="$disabled"
     :horizontal="$horizontal"
     :reverse="$reverse"
+    :wrapperClass="$wrapperClass"
 />
