@@ -31,7 +31,9 @@ class ControlGroupTest extends FeatureTestCase
         $name            = static::faker()->slug(2);
         $altInputName    = static::faker()->slug(2);
         $btnContent      = static::faker()->words(2, true);
+        $label           = static::faker()->words(2, true);
         $textareaContent = static::faker()->text();
+        $id              = static::faker()->slug(2);
 
         return [
             [
@@ -125,6 +127,24 @@ class ControlGroupTest extends FeatureTestCase
                     '<div class="input-group">',
                     '<span class="input-group-text">Description</span>',
                     sprintf('<textarea class="form-control" name="%s" rows="3">%s</textarea>', $name, $textareaContent),
+                    '</div>',
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'form.control_group.horizontal_input_button',
+                'data' => [
+                    'label'         => $label,
+                    'id'            => $id,
+                    'inputName'     => $name,
+                    'buttonContent' => $btnContent,
+                ],
+                'expects' => [
+                    '<div class="mb-3">',
+                    sprintf('<label for="%s" class="col-sm-2 col-form-label">%s</label>', $id, $label),
+                    '<div class="col-sm-10 input-group">',
+                    sprintf('<input class="form-control" id="%s" name="%s" type="text">', $id, $name),
+                    sprintf('<button class="btn" type="button">%s</button>', $btnContent),
                     '</div>',
                     '</div>',
                 ],
