@@ -50,6 +50,7 @@ To change the version of Bootstrap used, the config will need to be published.
 | List Group            | x-bootstrap::component.list-group |
 | Nav                   | x-bootstrap::component.nav        |
 | Navbar                | x-bootstrap::component.navbar     |
+| Offcanvas             | x-bootstrap::component.offcanvas  |
 | Progress              | x-bootstrap::component.progress   |
 | Tabs                  | x-bootstrap::component.tabs       |
 
@@ -192,6 +193,30 @@ Dropdown as an item
     <x-bootstrap::component.nav.item href="#" disabled="true">Dropdown Delta</x-bootstrap::component.nav.item>
     <x-bootstrap::component.nav.item href="#">Dropdown Gamma</x-bootstrap::component.nav.item>
 </x-bootstrap::component.nav>
+```
+
+### Offcanvas
+https://getbootstrap.com/docs/5.3/components/offcanvas/
+```html
+<x-bootstrap::component.offcanvas :id="$id">
+    {{ $content }}
+</x-bootstrap::component.offcanvas>
+```
+
+All Options
+```html
+<x-bootstrap::component.offcanvas
+        :id="$id"
+        :title="$title"
+        :title-id="$titleId"
+        :scroll="$scroll"
+        :backdrop="$backdrop"
+        :backdrop-static="$backdropStatic"
+        :placement="$placement"
+        :show="$show"
+>
+    {{ $content }}
+</x-bootstrap::component.offcanvas>
 ```
 
 ### Progress
