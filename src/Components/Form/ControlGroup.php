@@ -4,6 +4,7 @@ namespace StoneHilt\Bootstrap\Components\Form;
 
 use Illuminate\View\ComponentAttributeBag;
 use StoneHilt\Bootstrap\Components\Base;
+use StoneHilt\Bootstrap\Components\Traits\HasHorizontalLayoutWithLabel;
 use StoneHilt\Bootstrap\Components\Traits\PrefixNames;
 
 /**
@@ -13,7 +14,7 @@ use StoneHilt\Bootstrap\Components\Traits\PrefixNames;
  */
 class ControlGroup extends Base
 {
-    use PrefixNames;
+    use HasHorizontalLayoutWithLabel;
 
     /**
      * @var string $viewName
@@ -40,47 +41,15 @@ class ControlGroup extends Base
     {
         $classes = [];
 
+        if ($this->horizontal) {
+            $classes[] = 'row';
+        }
+
         if (!empty($this->wrapperClass)) {
             $classes = array_merge($classes, (array)$this->wrapperClass);
         }
 
         return implode(' ', $classes);
-    }
-
-    /**
-     * @return string
-     */
-    public function horizontalLabelWidth(): string
-    {
-        $labelWidths = [];
-        $inputWidths = is_string($this->horizontalWidth) ? explode(' ', $this->horizontalWidth) : $this->horizontalWidth;
-
-        // col-xx-0 does not exist and effectively the same as col-xx-12
-        foreach ($inputWidths as $width) {
-            if (is_numeric($width)) {
-                $labelWidths[] = sprintf(
-                    'col-%d',
-                    (12 - $width) ?: 12
-                );
-            } else {
-                [$responsiveType, $columnWidth] = explode('-', $width);
-                $labelWidths[] = sprintf(
-                    'col-%s-%d',
-                    $responsiveType,
-                    (12 - $columnWidth) ?: 12
-                );
-            }
-        }
-
-        return implode(' ', $labelWidths);
-    }
-
-    /**
-     * @return string
-     */
-    public function horizontalWidth(): string
-    {
-        return implode(' ', $this->prefixNames($this->horizontalWidth, 'col'));
     }
 
     /**
