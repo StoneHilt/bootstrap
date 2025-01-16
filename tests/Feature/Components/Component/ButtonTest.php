@@ -90,8 +90,8 @@ class ButtonTest extends FeatureTestCase
                 foreach ($variants as $variant) {
                     $classes[10] = $outline ? 'btn-outline-' . $variant : 'btn-' . $variant;
 
-                    foreach ([null, 'lg', 'sm'] as $size) {
-                        if (isset($size)) {
+                    foreach ([null, 'lg', 'md', 'sm'] as $size) {
+                        if (isset($size) && $size !== 'md') {
                             $classes[20] = 'btn-' . $size;
                         } else {
                             unset($classes[20]);
