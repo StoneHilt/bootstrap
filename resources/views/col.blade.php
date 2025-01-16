@@ -1,3 +1,3 @@
-<div {{ $attributes }}>
+<{{ $tag }} {{ $attributes }}>
     {{ $slot }}
-</div>
+</{{ $tag }}>
