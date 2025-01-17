@@ -5,7 +5,7 @@
                 @if($header->isNotEmpty())
                     <div {{ $header->attributes->class([$header->attributes->prepends('card-header')]) }}>{{ $header }}</div>
                 @elseif($headerImage->isNotEmpty() || $headerImage->attributes->empty())
-                    <img src="{{ $headerImage }}" class="img-fluid rounded-start" alt="{{ $headerImage ?? 'Image Top' }}">
+                    <img {{ $headerImage->attributes->class(['img-fluid', 'rounded-start'])->except(['alt', 'src']) }} src="{{ $headerImage }}" alt="{{ $headerImage->attributes->get('alt', 'Image Top') }}">
                 @endif
             </div>
         @endif
