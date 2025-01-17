@@ -33,6 +33,7 @@ class CardTest extends FeatureTestCase
         $content       = static::faker()->text();
         $header        = static::faker()->text();
         $headerClass   = static::faker()->slug(2);
+        $headerImage   = static::faker()->imageUrl();
         $title         = static::faker()->text();
         $titleClass    = static::faker()->slug(2);
         $subtitle      = static::faker()->text();
@@ -41,6 +42,7 @@ class CardTest extends FeatureTestCase
         $textClass     = static::faker()->slug(2);
         $footer        = static::faker()->text();
         $footerClass   = static::faker()->slug(2);
+        $footerImage   = static::faker()->imageUrl();
 
         $providerData =[
             [
@@ -103,6 +105,46 @@ class CardTest extends FeatureTestCase
                 ],
             ],
             [
+                'view' => 'component.card.body_header_image_with_attributes',
+                'data' => [
+                    'content'     => $content,
+                    'horizontal'   => false,
+                    'headerImage' => $headerImage,
+                    'headerClass' => $headerClass,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    sprintf('<img class="card-img-top %s" id="the-header" src="%s" alt="Image Top">', $headerClass, $headerImage),
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'component.card.body_header_image_with_attributes',
+                'data' => [
+                    'content'     => $content,
+                    'horizontal'   => true,
+                    'headerImage' => $headerImage,
+                    'headerClass' => $headerClass,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    '<div class="row g-0">',
+                    '<div class="col-md-4">',
+                    sprintf('<img class="img-fluid rounded-start %s" id="the-header" src="%s" alt="Image Top">', $headerClass, $headerImage),
+                    '</div>',
+                    '<div class="col-md-8">',
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    '</div>',
+                    '</div>',
+                    '</div>',
+                ],
+            ],
+            [
                 'view' => 'component.card.body_footer_with_attributes',
                 'data' => [
                     'content'     => $content,
@@ -115,6 +157,22 @@ class CardTest extends FeatureTestCase
                     $content,
                     '</div>',
                     sprintf('<div class="card-footer %s" id="the-footer">%s</div>', $footerClass, $footer),
+                    '</div>',
+                ],
+            ],
+            [
+                'view' => 'component.card.body_footer_image_with_attributes',
+                'data' => [
+                    'content'     => $content,
+                    'footerImage' => $footerImage,
+                    'footerClass' => $footerClass,
+                ],
+                'expects' => [
+                    '<div class="card">',
+                    '<div class="card-body">',
+                    $content,
+                    '</div>',
+                    sprintf('<img class="card-img-bottom %s" id="the-footer" src="%s" alt="Image Bottom">', $footerClass, $footerImage),
                     '</div>',
                 ],
             ],
@@ -458,7 +516,7 @@ class CardTest extends FeatureTestCase
                                     $headerImageExpectedElements = $footerExpectedElements
                                         + [
                                             50 => isset($headerImage)
-                                                ? sprintf('<img src="%s" class="card-img-top" alt="%s">', $headerImage, $headerImage)
+                                                ? sprintf('<img class="card-img-top" src="%s" alt="Image Top">', $headerImage)
                                                 : null,
                                         ];
 
@@ -466,7 +524,7 @@ class CardTest extends FeatureTestCase
                                         $footerImageExpectedElements = $headerImageExpectedElements
                                             + [
                                                 190 => isset($footerImage)
-                                                    ? sprintf('<img src="%s" class="card-img-bottom" alt="%s">', $footerImage, $footerImage)
+                                                    ? sprintf('<img class="card-img-bottom" src="%s" alt="Image Bottom">', $footerImage,)
                                                     : null,
                                             ];
 
@@ -672,7 +730,7 @@ class CardTest extends FeatureTestCase
                                 $headerImageExpectedElements = $headerExpectedElements
                                     + [
                                         50 => isset($headerImage)
-                                            ? sprintf('<img src="%s" class="img-fluid rounded-start" alt="%s">', $headerImage, $headerImage)
+                                            ? sprintf('<img class="img-fluid rounded-start" src="%s" alt="Image Top">', $headerImage)
                                             : null,
                                     ];
 
