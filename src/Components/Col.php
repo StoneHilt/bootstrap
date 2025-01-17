@@ -42,11 +42,13 @@ class Col extends Base
     protected static array $validProperties = [];
 
     /**
+     * @param string $tag
      * @param string|array $width
      * @param string|array|null $order
      * @param string|array|null $offset
      */
     public function __construct(
+        public string $tag = 'div',
         public string|array $width = '',
         public string|array|null $order = null,
         public string|array|null $offset = null

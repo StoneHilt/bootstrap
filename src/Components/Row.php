@@ -18,6 +18,14 @@ class Row extends Base
     protected string $viewName = 'bootstrap::row';
 
     /**
+     * @param string $tag
+     */
+    public function __construct(public string $tag = 'div')
+    {
+        parent::__construct();
+    }
+
+    /**
      * Override to transform/add attributes at render time
      *
      * @param ComponentAttributeBag $attributes
