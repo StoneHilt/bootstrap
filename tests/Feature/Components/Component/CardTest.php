@@ -42,7 +42,7 @@ class CardTest extends FeatureTestCase
         $footer        = static::faker()->text();
         $footerClass   = static::faker()->slug(2);
 
-        return [
+        $providerData =[
             [
                 'view' => 'component.card.simple_body',
                 'data' => [
@@ -146,7 +146,146 @@ class CardTest extends FeatureTestCase
                     '</div>',
                 ],
             ],
+            [
+                'view' => 'component.card.all_slots_horizontal',
+                'data' => [
+                    'content'       => $content,
+                    'header'        => $header,
+                    'headerClass'   => $headerClass,
+                    'title'         => $title,
+                    'titleClass'    => $titleClass,
+                    'subtitle'      => $subtitle,
+                    'subtitleClass' => $subtitleClass,
+                    'text'          => $text,
+                    'textClass'     => $textClass,
+                ],
+                'expects' => [
+                    '<div class="card" id="the-card">',
+                    '<div class="row g-0">',
+                    '<div class="col-md-4">',
+                    sprintf('<div class="card-header %s" id="the-header">%s</div>', $headerClass, $header),
+                    '</div>',
+                    '<div class="col-md-8">',
+                    '<div class="card-body">',
+                    sprintf('<h5 class="card-title %s" id="the-title">%s</h5>', $titleClass, $title),
+                    sprintf('<h6 class="card-subtitle mb-2 text-muted %s" id="the-subtitle">%s</h6>', $subtitleClass, $subtitle),
+                    sprintf('<p class="card-text %s" id="the-text">%s</p>', $textClass, $text),
+                    $content,
+                    '</div>',
+                    '</div>',
+                    '</div>',
+                    '</div>',
+                ],
+            ],
         ];
+
+        $tags = ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+        foreach ($tags as $titleTag) {
+            foreach ($tags as $subtitleTag) {
+                foreach ($tags as $textTag) {
+                    $providerData[] = [
+                        'view' => 'component.card.change_section_tags',
+                        'data' => [
+                            'horizontal'    => false,
+                            'header'        => $header,
+                            'headerClass'   => $headerClass,
+                            'title'         => $title,
+                            'titleTag'      => $titleTag,
+                            'titleClass'    => $titleClass,
+                            'subtitle'      => $subtitle,
+                            'subtitleTag'   => $subtitleTag,
+                            'subtitleClass' => $subtitleClass,
+                            'text'          => $text,
+                            'textTag'       => $textTag,
+                            'textClass'     => $textClass,
+                        ],
+                        'expects' => [
+                            '<div class="card" id="the-card">',
+                            sprintf('<div class="card-header %s" id="the-header">%s</div>', $headerClass, $header),
+                            '<div class="card-body">',
+                            sprintf(
+                                '<%s class="card-title %s" id="the-title">%s</%s>',
+                                $titleTag,
+                                $titleClass,
+                                $title,
+                                $titleTag
+                            ),
+                            sprintf(
+                                '<%s class="card-subtitle mb-2 text-muted %s" id="the-subtitle">%s</%s>',
+                                $subtitleTag,
+                                $subtitleClass,
+                                $subtitle,
+                                $subtitleTag
+                            ),
+                            sprintf(
+                                '<%s class="card-text %s" id="the-text">%s</%s>',
+                                $textTag,
+                                $textClass,
+                                $text,
+                                $textTag
+                            ),
+                            '</div>',
+                            '</div>',
+                        ],
+                    ];
+
+                    $providerData[] = [
+                        'view' => 'component.card.change_section_tags',
+                        'data' => [
+                            'horizontal'    => true,
+                            'header'        => $header,
+                            'headerClass'   => $headerClass,
+                            'title'         => $title,
+                            'titleTag'      => $titleTag,
+                            'titleClass'    => $titleClass,
+                            'subtitle'      => $subtitle,
+                            'subtitleTag'   => $subtitleTag,
+                            'subtitleClass' => $subtitleClass,
+                            'text'          => $text,
+                            'textTag'       => $textTag,
+                            'textClass'     => $textClass,
+                        ],
+                        'expects' => [
+                            '<div class="card" id="the-card">',
+                            '<div class="row g-0">',
+                            '<div class="col-md-4">',
+                            sprintf('<div class="card-header %s" id="the-header">%s</div>', $headerClass, $header),
+                            '</div>',
+                            '<div class="col-md-8">',
+                            '<div class="card-body">',
+                            sprintf(
+                                '<%s class="card-title %s" id="the-title">%s</%s>',
+                                $titleTag,
+                                $titleClass,
+                                $title,
+                                $titleTag
+                            ),
+                            sprintf(
+                                '<%s class="card-subtitle mb-2 text-muted %s" id="the-subtitle">%s</%s>',
+                                $subtitleTag,
+                                $subtitleClass,
+                                $subtitle,
+                                $subtitleTag
+                            ),
+                            sprintf(
+                                '<%s class="card-text %s" id="the-text">%s</%s>',
+                                $textTag,
+                                $textClass,
+                                $text,
+                                $textTag
+                            ),
+                            '</div>',
+                            '</div>',
+                            '</div>',
+                            '</div>',
+                        ],
+                    ];
+                }
+            }
+        }
+
+        return $providerData;
     }
 
     /**
