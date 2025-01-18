@@ -87,7 +87,7 @@ class Select extends AbstractFormComponent
         $attributes = $attributes->class(
             [
                 'form-control',
-                'form-control-' . $this->size => !empty($this->size),
+                'form-control-' . $this->size => isset($this->size) && $this->size !== 'md',
             ]
         );
 

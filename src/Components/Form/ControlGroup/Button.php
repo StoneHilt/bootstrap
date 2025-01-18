@@ -27,6 +27,7 @@ class Button extends Base
      */
     protected static array $sizes = [
         'lg',
+        'md',
         'sm',
     ];
 
@@ -77,7 +78,7 @@ class Button extends Base
                     [
                         'btn',
                         $variantClass => isset($this->variant),
-                        ('btn-' . $this->size ?? '') => isset($this->size),
+                        ('btn-' . $this->size ?? '') => isset($this->size) && $this->size !== 'md',
                     ]
                 )
         );

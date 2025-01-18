@@ -20,8 +20,6 @@ class Textarea extends Base
         'sm',
         'md',
         'lg',
-        'xl',
-        'xxl',
     ];
 
     /**
@@ -55,7 +53,7 @@ class Textarea extends Base
         $attributes = $attributes->class(
             [
                 $this->plaintext ? 'form-control-plaintext' : 'form-control',
-                'form-control-' . $this->size => !empty($this->size),
+                'form-control-' . $this->size => isset($this->size) && $this->size !== 'md',
             ]
         );
 

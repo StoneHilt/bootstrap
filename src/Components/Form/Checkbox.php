@@ -126,7 +126,7 @@ class Checkbox extends AbstractFormComponent
         $attributes = $attributes->class(
             [
                 str_starts_with($this->type, 'btn-') ? 'btn-check' : 'form-check-input',
-                'form-control-' . $this->size => !empty($this->size),
+                'form-control-' . $this->size => isset($this->size) && $this->size !== 'md',
             ]
         );
 
