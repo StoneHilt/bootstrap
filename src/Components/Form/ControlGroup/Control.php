@@ -20,8 +20,6 @@ class Control extends Base
         'sm',
         'md',
         'lg',
-        'xl',
-        'xxl',
     ];
 
     /**
@@ -56,7 +54,7 @@ class Control extends Base
             [
                 $this->plaintext ? 'form-control-plaintext' : 'form-control',
                 'form-control-color' => $this->type === 'color',
-                'form-control-' . $this->size => !empty($this->size),
+                'form-control-' . $this->size => isset($this->size) && $this->size !== 'md',
             ]
         );
 
