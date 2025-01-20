@@ -25,8 +25,6 @@ abstract class AbstractFormComponent extends Base
         'sm',
         'md',
         'lg',
-        'xl',
-        'xxl',
     ];
 
     /**

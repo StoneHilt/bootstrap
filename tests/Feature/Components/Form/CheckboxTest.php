@@ -100,7 +100,7 @@ class CheckboxTest extends FeatureTestCase
             foreach ([true, false] as $disabled) {
                 foreach ([true, false] as $horizontal) {
                     foreach ([true, false] as $reverse) {
-                        foreach (['sm', 'md', 'lg', 'xl', 'xxl', null] as $size) {
+                        foreach (['sm', 'md', 'lg', null] as $size) {
                             foreach (['', 'mb-3'] as $wrapperClass) {
 
                                 $providerData[] = [
@@ -126,7 +126,7 @@ class CheckboxTest extends FeatureTestCase
                                         ),
                                         sprintf(
                                             '<input class="form-check-input%s" id="%s" value="%s" type="checkbox"%s%s name="%s">',
-                                            isset($size) ? ' form-control-' . $size : '',
+                                            (isset($size) && $size != 'md') ? ' form-control-' . $size : '',
                                             $id,
                                             $value,
                                             $disabled ? ' disabled="disabled"' : '',

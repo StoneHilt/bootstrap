@@ -17,6 +17,7 @@ class Container extends Base
      * @var array|string[]
      */
     protected static array $types = [
+        'xs',
         'sm',
         'md',
         'lg',
@@ -51,7 +52,7 @@ class Container extends Base
                 [
                     sprintf(
                         'container%s',
-                        !empty($this->type) ? '-' . $this->type : ''
+                        (!empty($this->type) && $this->type !== 'xs') ? '-' . $this->type : ''
                     )
                 ]
             )

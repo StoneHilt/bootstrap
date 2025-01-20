@@ -41,8 +41,6 @@ class ControlTest extends FeatureTestCase
         'sm',
         'md',
         'lg',
-        'xl',
-        'xxl',
     ];
 
     /**
@@ -214,7 +212,7 @@ class ControlTest extends FeatureTestCase
                                                         sprintf(
                                                             '<input class="%s%s" id="%s"%s type="%s"%s%s name="%s"  list="%s-datalist" >',
                                                             $plaintext ? 'form-control-plaintext' : 'form-control',
-                                                            isset($size) ? ' form-control-' . $size : '',
+                                                            (isset($size) && $size != 'md') ? ' form-control-' . $size : '',
                                                             $id,
                                                             isset($value) ? ' value="' . $value . '"' : '',
                                                             $type,
@@ -330,9 +328,9 @@ class ControlTest extends FeatureTestCase
             foreach ([null, true, false] as $plaintext) {
                 foreach ([null, true, false] as $disabled) {
                     foreach ([null, true, false] as $readonly) {
-                        foreach ([null, 'sm', 'md', 'lg', 'xl', 'xxl',] as $size) {
+                        foreach ([null, 'sm', 'md', 'lg'] as $size) {
                             $class = $plaintext ? 'form-control-plaintext' : 'form-control';
-                            $class .= isset($size) ? ' form-control-' . $size : '';
+                            $class .= (isset($size) && $size != 'md') ? ' form-control-' . $size : '';
 
                             $providerData[] = array_merge(
                                 $blankDataSet,

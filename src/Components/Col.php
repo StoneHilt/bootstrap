@@ -42,11 +42,13 @@ class Col extends Base
     protected static array $validProperties = [];
 
     /**
+     * @param string $tag
      * @param string|array $width
      * @param string|array|null $order
      * @param string|array|null $offset
      */
     public function __construct(
+        public string $tag = 'div',
         public string|array $width = '',
         public string|array|null $order = null,
         public string|array|null $offset = null
@@ -78,12 +80,43 @@ class Col extends Base
         return parent::transformAttributes(
             $attributes->class(
                 array_merge(
-                    $this->prefixNames($this->width, 'col'),
-                    $this->prefixNames($this->offset, 'offset'),
-                    $this->prefixNames($this->order, 'order'),
+                    $this->prefixNames($this->combineNumberAndXs($this->width), 'col'),
+                    $this->prefixNames($this->combineNumberAndXs($this->offset), 'offset'),
+                    $this->prefixNames($this->combineNumberAndXs($this->order), 'order'),
                 )
             )
         );
+    }
+
+    /**
+     * @param string|array|null $subject
+     * @return string|array|null
+     */
+    protected function combineNumberAndXs(string|array|null $subject): string|array|null
+    {
+        if (!isset($subject) || is_string($subject)) {
+            return $subject;
+        }
+
+        $xsAttributes = [];
+        $numberAttributes = [];
+
+        foreach ($subject as $key => $attribute) {
+            if (is_numeric($attribute)) {
+                $numberAttributes[] = $attribute;
+            } elseif (str_starts_with($attribute, 'xs-')) {
+                $xsAttributes[] = $attribute;
+            }
+        }
+
+        if (!empty($numberAttributes) && !empty($xsAttributes)) {
+            // remove first number attribute as being the default value
+            array_shift($numberAttributes);
+
+            $subject = array_diff($subject, $numberAttributes, $xsAttributes);
+        }
+
+        return $subject;
     }
 
     /**
