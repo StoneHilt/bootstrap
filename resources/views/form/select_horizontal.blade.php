@@ -9,4 +9,9 @@
             @endforeach
         </select>
     </div>
+    @if (isset($help))
+        <div class="col-auto">
+            <div id="{{ $attributes['id'] . '-help' }}" class="form-text">{{ $help }}</div>
+        </div>
+    @endif
 </div>

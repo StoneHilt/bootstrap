@@ -51,6 +51,7 @@ class Radio extends AbstractFormComponent
         public ?string $size = null,
         public array $disabled = [],
         public bool $horizontal = false,
+        public ?string $help = null,
         public bool $reverse = false,
         public string|array $wrapperClass = 'mb-3',
     ) {
@@ -58,6 +59,7 @@ class Radio extends AbstractFormComponent
             name: $this->name,
             size: $this->size,
             horizontal: $this->horizontal,
+            help: $this->help,
             wrapperClass: $this->wrapperClass
         );
     }

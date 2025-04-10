@@ -35,6 +35,7 @@ class Select extends AbstractFormComponent
         public bool $disabled = false,
         public bool $multiple = false,
         public bool $horizontal = false,
+        public ?string $help = null,
         public string|array $horizontalWidth = 'sm-10',
         public string|array $wrapperClass = 'mb-3',
     ) {
@@ -43,6 +44,7 @@ class Select extends AbstractFormComponent
             label: $this->label,
             size: $this->size,
             horizontal: $this->horizontal,
+            help: $this->help,
             horizontalWidth: $this->horizontalWidth,
             wrapperClass: $this->wrapperClass
         );

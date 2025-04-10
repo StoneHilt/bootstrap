@@ -26,6 +26,7 @@ class Control extends AbstractFormComponent
      * @param bool $readonly
      * @param bool $plaintext
      * @param bool $horizontal
+     * @param string|null $help
      * @param string|array $horizontalWidth Apply specific width to the input when in horizontal mode
      * @param array|null $datalist
      * @param string|array $wrapperClass
@@ -39,6 +40,7 @@ class Control extends AbstractFormComponent
         public bool $readonly = false,
         public bool $plaintext = false,
         public bool $horizontal = false,
+        public ?string $help = null,
         public string|array $horizontalWidth = 'sm-10',
         public ?array $datalist = null,
         public string|array $wrapperClass = 'mb-3',
@@ -48,6 +50,7 @@ class Control extends AbstractFormComponent
             label: $this->label,
             size: $this->size,
             horizontal: $this->horizontal,
+            help: $this->help,
             horizontalWidth: $this->horizontalWidth,
             wrapperClass: $this->wrapperClass
         );
