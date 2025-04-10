@@ -10,4 +10,7 @@
             @endforeach
         </datalist>
     @endif
+    @if (isset($help))
+        <div id="{{ $attributes['id'] . '-help' }}" class="form-text">{{ $help }}</div>
+    @endif
 </div>

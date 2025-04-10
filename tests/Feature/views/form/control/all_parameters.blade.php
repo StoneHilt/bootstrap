@@ -25,6 +25,7 @@ Form control with all available parameters
         :disabled="$disabled"
         :readonly="$readonly"
         :plaintext="$plaintext"
+        :help="$help"
         :horizontal="$horizontal"
         :horizontalWidth="$horizontalWidth"
         :datalist="$datalist"

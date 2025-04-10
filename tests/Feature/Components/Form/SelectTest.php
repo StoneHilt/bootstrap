@@ -35,7 +35,8 @@ class SelectTest extends FeatureTestCase
             array_map(fn($word) => strtolower($word), static::faker()->words()),
             array_map(fn($word) => ucfirst($word), static::faker()->words())
         );
-        $value = array_rand($options);
+        $value    = array_rand($options);
+        $helpText = static::faker()->text();
 
         $providerData = [
             [
@@ -123,6 +124,41 @@ class SelectTest extends FeatureTestCase
                     ),
                     [
                         '</select>',
+                        '</div>',
+                    ]
+                ),
+            ],
+            [
+                'view' => 'form.select.with_help',
+                'data' => [
+                    'label'   => $label,
+                    'name'    => $name,
+                    'id'      => $id,
+                    'help'    => $helpText,
+                    'options' => $options,
+                    'value'   => $value,
+                ],
+                'expects' => array_merge(
+                    [
+                        '<div class="mb-3">',
+                        sprintf('<label for="%s" class="form-label">%s</label>', $id, $label),
+                        sprintf('<select class="form-control" id="%s" name="%s" aria-describedby="%s-help">', $id, $name, $id),
+                    ],
+                    array_map(
+                        function ($word, $key) use ($value) {
+                            return sprintf(
+                                '<option value="%s"%s>%s</option>',
+                                $key,
+                                ($key === $value) ? ' selected' : '',
+                                $word
+                            );
+                        },
+                        $options,
+                        array_keys($options)
+                    ),
+                    [
+                        '</select>',
+                        sprintf('<div id="%s-help" class="form-text">%s</div>', $id, $helpText),
                         '</div>',
                     ]
                 ),

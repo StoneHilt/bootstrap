@@ -52,6 +52,7 @@ class Checkbox extends AbstractFormComponent
         public ?string $size = null,
         public bool $disabled = false,
         public bool $horizontal = false,
+        public ?string $help = null,
         public bool $reverse = false,
         public string|array $wrapperClass = '',
     ) {
@@ -60,6 +61,7 @@ class Checkbox extends AbstractFormComponent
             label: $this->label,
             size: $this->size,
             horizontal: $this->horizontal,
+            help: $this->help,
             wrapperClass: $this->wrapperClass
         );
     }

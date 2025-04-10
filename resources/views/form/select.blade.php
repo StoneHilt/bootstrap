@@ -7,4 +7,7 @@
             <option {{ $option->attributes }}{{ $isSelected($option->attributes->get('value')) ? ' selected' : '' }}>{{ $option }}</option>
         @endforeach
     </select>
+    @if (isset($help))
+        <div id="{{ $attributes['id'] . '-help' }}" class="form-text">{{ $help }}</div>
+    @endif
 </div>

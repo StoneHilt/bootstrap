@@ -66,6 +66,7 @@ class ControlTest extends FeatureTestCase
         $name     = $faker->slug(2);
         $id       = $faker->slug(1);
         $datalist = $faker->words();
+        $helpText = $faker->text();
 
         $providerData = [
             [
@@ -179,61 +180,68 @@ class ControlTest extends FeatureTestCase
                     foreach ([true, false] as $disabled) {
                         foreach ([true, false] as $readonly) {
                             foreach ([true, false] as $plaintext) {
-                                foreach ([true, false] as $horizontal) {
-                                    foreach ($horizontalWidths as $classes) {
-                                        foreach (['', 'mb-3', 'm-2'] as $wrapperClass) {
-                                            $providerData[] = [
-                                                'view' => 'form.control.all_parameters',
-                                                'data' => [
-                                                    'type'            => $type,
-                                                    'name'            => $name,
-                                                    'id'              => $id,
-                                                    'value'           => $value,
-                                                    'label'           => $label,
-                                                    'size'            => $size,
-                                                    'disabled'        => $disabled,
-                                                    'readonly'        => $readonly,
-                                                    'plaintext'       => $plaintext,
-                                                    'horizontal'      => $horizontal,
-                                                    'horizontalWidth' => $classes['data'],
-                                                    'datalist'        => $datalist,
-                                                    'wrapperClass'    => $wrapperClass,
-                                                ],
-                                                'expects' => array_merge(
-                                                    [
-                                                        sprintf('<div class="%s">', static::buildClassList([$horizontal ? 'row' : '', $wrapperClass])),
-                                                        sprintf(
-                                                            '<label for="%s" class="%s">%s</label>',
-                                                            $id,
-                                                            $horizontal ? $classes['labelClass'] . ' col-form-label' : 'form-label',
-                                                            $label
-                                                        ),
-                                                        $horizontal ? sprintf('<div class="%s">', $classes['inputWrapperClass']) : null,
-                                                        sprintf(
-                                                            '<input class="%s%s" id="%s"%s type="%s"%s%s name="%s"  list="%s-datalist" >',
-                                                            $plaintext ? 'form-control-plaintext' : 'form-control',
-                                                            (isset($size) && $size != 'md') ? ' form-control-' . $size : '',
-                                                            $id,
-                                                            isset($value) ? ' value="' . $value . '"' : '',
-                                                            $type,
-                                                            $disabled ? ' disabled="disabled"' : '',
-                                                            $readonly ? ' readonly="readonly"' : '',
-                                                            $name,
-                                                            $id
-                                                        ),
-                                                        $horizontal ? '</div>' : null,
-                                                        sprintf('<datalist id="%s-datalist">', $id),
+                                foreach ([null, $helpText] as $help) {
+                                    foreach ([true, false] as $horizontal) {
+                                        foreach ($horizontalWidths as $classes) {
+                                            foreach (['', 'mb-3', 'm-2'] as $wrapperClass) {
+                                                $providerData[] = [
+                                                    'view' => 'form.control.all_parameters',
+                                                    'data' => [
+                                                        'type'            => $type,
+                                                        'name'            => $name,
+                                                        'id'              => $id,
+                                                        'value'           => $value,
+                                                        'label'           => $label,
+                                                        'size'            => $size,
+                                                        'disabled'        => $disabled,
+                                                        'readonly'        => $readonly,
+                                                        'plaintext'       => $plaintext,
+                                                        'horizontal'      => $horizontal,
+                                                        'help'            => $help,
+                                                        'horizontalWidth' => $classes['data'],
+                                                        'datalist'        => $datalist,
+                                                        'wrapperClass'    => $wrapperClass,
                                                     ],
-                                                    array_map(
-                                                        fn($val) => sprintf('<option value="%s">', $val),
-                                                        $datalist
+                                                    'expects' => array_merge(
+                                                        [
+                                                            sprintf('<div class="%s">', static::buildClassList([$horizontal ? 'row' : '', $wrapperClass])),
+                                                            sprintf(
+                                                                '<label for="%s" class="%s">%s</label>',
+                                                                $id,
+                                                                $horizontal ? $classes['labelClass'] . ' col-form-label' : 'form-label',
+                                                                $label
+                                                            ),
+                                                            $horizontal ? sprintf('<div class="%s">', $classes['inputWrapperClass']) : null,
+                                                            sprintf(
+                                                                '<input class="%s%s" id="%s"%s type="%s"%s%s name="%s"%s  list="%s-datalist" >',
+                                                                $plaintext ? 'form-control-plaintext' : 'form-control',
+                                                                (isset($size) && $size != 'md') ? ' form-control-' . $size : '',
+                                                                $id,
+                                                                isset($value) ? ' value="' . $value . '"' : '',
+                                                                $type,
+                                                                $disabled ? ' disabled="disabled"' : '',
+                                                                $readonly ? ' readonly="readonly"' : '',
+                                                                $name,
+                                                                $help ? ' aria-describedby="' . $id. '-help"' : '',
+                                                                $id
+                                                            ),
+                                                            $horizontal ? '</div>' : null,
+                                                            sprintf('<datalist id="%s-datalist">', $id),
+                                                        ],
+                                                        array_map(
+                                                            fn($val) => sprintf('<option value="%s">', $val),
+                                                            $datalist
+                                                        ),
+                                                        [
+                                                            '</datalist>',
+                                                            $help && $horizontal ? '<div class="col-auto">' : null,
+                                                            $help ? sprintf('<div id="%s-help" class="form-text">%s</div>', $id, $help) : null,
+                                                            $help && $horizontal ? '</div>' : null,
+                                                            '</div>',
+                                                        ],
                                                     ),
-                                                    [
-                                                        '</datalist>',
-                                                        '</div>',
-                                                    ],
-                                                ),
-                                            ];
+                                                ];
+                                            }
                                         }
                                     }
                                 }
