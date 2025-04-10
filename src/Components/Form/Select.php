@@ -18,11 +18,18 @@ class Select extends AbstractFormComponent
     protected string $viewName = 'bootstrap::form.select';
 
     /**
+     * @var array $mapToSlot List of properties that should be mapped to a ComponentSlot instance before rendering
+     */
+    protected static array $mapToSlot = [
+        'options' => 'value'
+    ];
+
+    /**
      * Create a new component instance.
      */
     public function __construct(
         public string $name,
-        public array $options,
+        public array $options = [],
         public ?string $label = null,
         public ?string $size = null,
         public bool $disabled = false,
