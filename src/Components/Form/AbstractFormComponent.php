@@ -35,6 +35,7 @@ abstract class AbstractFormComponent extends Base
         public ?string $label = null,
         public ?string $size = null,
         public bool $horizontal = false,
+        public ?string $help = null,
         public string|array $horizontalWidth = 'sm-10',
         public string|array $wrapperClass = 'mb-3',
     ) {
@@ -55,6 +56,10 @@ abstract class AbstractFormComponent extends Base
 
         if (!$attributes->has('name')) {
             $attributes['name'] = $this->name;
+        }
+
+        if (!empty($this->help)) {
+            $attributes['aria-describedby'] = $attributes['id'] . '-help';
         }
 
         return parent::transformAttributes($attributes);

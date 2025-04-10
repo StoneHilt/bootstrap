@@ -18,16 +18,24 @@ class Select extends AbstractFormComponent
     protected string $viewName = 'bootstrap::form.select';
 
     /**
+     * @var array $mapToSlot List of properties that should be mapped to a ComponentSlot instance before rendering
+     */
+    protected static array $mapToSlot = [
+        'options' => 'value'
+    ];
+
+    /**
      * Create a new component instance.
      */
     public function __construct(
         public string $name,
-        public array $options,
+        public array $options = [],
         public ?string $label = null,
         public ?string $size = null,
         public bool $disabled = false,
         public bool $multiple = false,
         public bool $horizontal = false,
+        public ?string $help = null,
         public string|array $horizontalWidth = 'sm-10',
         public string|array $wrapperClass = 'mb-3',
     ) {
@@ -36,6 +44,7 @@ class Select extends AbstractFormComponent
             label: $this->label,
             size: $this->size,
             horizontal: $this->horizontal,
+            help: $this->help,
             horizontalWidth: $this->horizontalWidth,
             wrapperClass: $this->wrapperClass
         );

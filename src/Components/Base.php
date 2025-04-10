@@ -134,7 +134,10 @@ abstract class Base extends Component
      */
     protected function transformViewData(array $viewData): array
     {
-        foreach (static::$mapToSlot as $property) {
+        foreach (static::$mapToSlot as $property => $keyFieldName) {
+            $keyName = is_int($property) ? 'id' : $keyFieldName;
+            $property = is_int($property) ? $keyFieldName : $property;
+
             if (!isset($viewData[$property])) {
                 $viewData[$property] = new ComponentSlot('');
 
@@ -143,7 +146,7 @@ abstract class Base extends Component
                     $collection = new SlotCollection();
 
                     foreach ($viewData[$property] as $key => $item) {
-                        $attributes = !is_numeric($key) ? ['id' => $key] : [];
+                        $attributes = !is_numeric($key) ? [$keyName => $key] : [];
 
                         $collection->push(new ComponentSlot($item, $attributes));
                     }

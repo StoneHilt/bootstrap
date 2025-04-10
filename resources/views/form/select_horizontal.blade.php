@@ -4,9 +4,14 @@
     @endif
     <div class="{{ $horizontalWidth() }}">
         <select {{ $attributes->except('value') }}>
-            @foreach($options as $option => $text)
-                <option value="{{ $option }}" {{ $isSelected($option) ? 'selected' : '' }}>{{ $text }}</option>
+            @foreach($options as $option)
+                <option {{ $option->attributes }}{{ $isSelected($option->attributes->get('value')) ? ' selected' : '' }}>{{ $option }}</option>
             @endforeach
         </select>
     </div>
+    @if (isset($help))
+        <div class="col-auto">
+            <div id="{{ $attributes['id'] . '-help' }}" class="form-text">{{ $help }}</div>
+        </div>
+    @endif
 </div>
