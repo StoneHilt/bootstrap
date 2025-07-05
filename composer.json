@@ -1,6 +1,6 @@
 {
     "name": "stonehilt/bootstrap",
-    "version": "10.0.13",
+    "version": "12.0.0",
     "description": "StoneHilt Component integration for Bootstrap CSS library",
     "minimum-stability": "stable",
     "license": "proprietary",
@@ -13,16 +13,16 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "ext-json": "*",
-        "laravel/framework": "~10",
-        "symfony/http-foundation": "^6.4",
-        "stonehilt/blade": "~10"
+        "laravel/framework": "~12",
+        "symfony/http-foundation": "^7.2.0",
+        "stonehilt/blade": "~12"
     },
     "require-dev": {
         "avastechnology/iolaus": "*",
-        "fakerphp/faker": "^1.9.1",
-        "phpunit/phpunit": "~10.0"
+      "fakerphp/faker": "^1.24",
+      "phpunit/phpunit": "^10.5.35|^11.5.3|^12.0.1"
     },
     "autoload": {
         "psr-4": {
