@@ -146,7 +146,9 @@ abstract class Base extends Component
                     $collection = new SlotCollection();
 
                     foreach ($viewData[$property] as $key => $item) {
-                        $attributes = !is_numeric($key) ? [$keyName => $key] : [];
+                        $attributes = (!is_numeric($key) || $keyName === $keyFieldName)
+                            ? [$keyName => $key]
+                            : [];
 
                         $collection->push(new ComponentSlot($item, $attributes));
                     }
