@@ -20,7 +20,7 @@
         "stonehilt/blade": "~12"
     },
     "require-dev": {
-        "avastechnology/iolaus": "*",
+      "avastechnology/iolaus": "*",
       "fakerphp/faker": "^1.24",
       "phpunit/phpunit": "^10.5.35|^11.5.3|^12.0.1"
     },
