@@ -95,6 +95,39 @@ class SelectTest extends FeatureTestCase
                 ),
             ],
             [
+                'view' => 'form.select.general',
+                'data' => [
+                    'label'   => $label,
+                    'name'    => $name,
+                    'id'      => $id,
+                    'options' => array_values($options),
+                    'value'   => $value,
+                ],
+                'expects' => array_merge(
+                    [
+                        '<div class="mb-3">',
+                        sprintf('<label for="%s" class="form-label">%s</label>', $id, $label),
+                        sprintf('<select class="form-control" id="%s" name="%s">', $id, $name),
+                    ],
+                    array_map(
+                        function ($word, $key) use ($value) {
+                            return sprintf(
+                                '<option value="%s"%s>%s</option>',
+                                $key,
+                                ($key === $value) ? ' selected' : '',
+                                $word
+                            );
+                        },
+                        $options,
+                        array_keys(array_values($options))
+                    ),
+                    [
+                        '</select>',
+                        '</div>',
+                    ]
+                ),
+            ],
+            [
                 'view' => 'form.select.general_slots',
                 'data' => [
                     'label'   => $label,

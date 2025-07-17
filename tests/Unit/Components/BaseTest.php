@@ -6,6 +6,7 @@ use Avastechnology\Iolaus\Traits\InvokeMethod;
 use Avastechnology\Iolaus\Traits\InvokeSetter;
 use Illuminate\View\ComponentSlot;
 use PHPUnit\Framework\MockObject\Exception;
+use StoneHilt\Blade\View\SlotCollection;
 use StoneHilt\Bootstrap\Components\Base;
 use StoneHilt\Bootstrap\Tests\Unit\UnitTestCase;
 
@@ -88,6 +89,90 @@ class BaseTest extends UnitTestCase
                 'expected' => [
                     'a' => 'abc',
                     'title' => new ComponentSlot('The title', ['x'=> 'X']),
+                    'b' => 2.5
+                ],
+            ],
+            [
+                'viewData' => [
+                    'a' => 'abc',
+                    'title' => [
+                        'title_a' => 'Title A',
+                        'title_b' => 'Title B',
+                    ],
+                    'b' => 2.5
+                ],
+                'mapToSlot' => ['title'],
+                'expected' => [
+                    'a' => 'abc',
+                    'title' => new SlotCollection(
+                        [
+                            new ComponentSlot('Title A', ['id'=> 'title_a']),
+                            new ComponentSlot('Title B', ['id'=> 'title_b']),
+                        ]
+                    ),
+                    'b' => 2.5
+                ],
+            ],
+            [
+                'viewData' => [
+                    'a' => 'abc',
+                    'title' => [
+                        'title_a' => 'Title A',
+                        'title_b' => 'Title B',
+                    ],
+                    'b' => 2.5
+                ],
+                'mapToSlot' => ['title' => 'attr'],
+                'expected' => [
+                    'a' => 'abc',
+                    'title' => new SlotCollection(
+                        [
+                            new ComponentSlot('Title A', ['attr'=> 'title_a']),
+                            new ComponentSlot('Title B', ['attr'=> 'title_b']),
+                        ]
+                    ),
+                    'b' => 2.5
+                ],
+            ],
+            [
+                'viewData' => [
+                    'a' => 'abc',
+                    'title' => [
+                        2 => 'Title A',
+                        10 => 'Title B',
+                    ],
+                    'b' => 2.5
+                ],
+                'mapToSlot' => ['title'],
+                'expected' => [
+                    'a' => 'abc',
+                    'title' => new SlotCollection(
+                        [
+                            new ComponentSlot('Title A'),
+                            new ComponentSlot('Title B'),
+                        ]
+                    ),
+                    'b' => 2.5
+                ],
+            ],
+            [
+                'viewData' => [
+                    'a' => 'abc',
+                    'title' => [
+                        2 => 'Title A',
+                        10 => 'Title B',
+                    ],
+                    'b' => 2.5
+                ],
+                'mapToSlot' => ['title' => 'attr'],
+                'expected' => [
+                    'a' => 'abc',
+                    'title' => new SlotCollection(
+                        [
+                            new ComponentSlot('Title A', ['attr'=> 2]),
+                            new ComponentSlot('Title B', ['attr'=> 10]),
+                        ]
+                    ),
                     'b' => 2.5
                 ],
             ],
