@@ -27,6 +27,15 @@ class Dropdown extends Base
     ];
 
     /**
+     * @var array|string[] $sizes
+     */
+    protected static array $sizes = [
+        'lg',
+        'md',
+        'sm',
+    ];
+
+    /**
      * @var string $viewName
      */
     protected string $viewName = 'bootstrap::component.dropdown.single';
@@ -37,6 +46,7 @@ class Dropdown extends Base
     public function __construct(
         public string $label,
         public string $variant = 'secondary',
+        public ?string $size = null,
         public array $items = [],
         public string $direction = 'down',
         public bool $split = false
@@ -96,6 +106,7 @@ class Dropdown extends Base
         $classes = [
             'btn',
             'btn-' . $this->variant,
+            ('btn-' . $this->size ?? '') => isset($this->size) && $this->size !== 'md',
         ];
 
         if (!$this->split) {
@@ -125,6 +136,7 @@ class Dropdown extends Base
         return [
             'direction' => [Rule::in(static::$directions)],
             'variant'   => [Rule::in(static::$variants)],
+            'size'      => ['nullable', Rule::in(static::$sizes)],
         ];
     }
 }
